@@ -240,7 +240,7 @@
     .day-selector {
       display: flex;
       gap: 12px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       overflow-x: auto;
       padding: 4px 0;
     }
@@ -288,6 +288,80 @@
     .day-chip .d-date {
       font-size: 0.78rem;
       color: var(--text-muted);
+    }
+
+    /* Feasibility Diagnostics Banner */
+    .feasibility-banner {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      backdrop-filter: blur(12px);
+    }
+
+    .feasibility-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .feasibility-badge {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-ok {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--success);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .badge-warn {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--warning);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    .badge-error {
+      background: rgba(248, 113, 113, 0.15);
+      color: var(--danger);
+      border: 1px solid rgba(248, 113, 113, 0.3);
+    }
+
+    .feasibility-controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .reset-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .reset-btn:hover {
+      background: rgba(248, 113, 113, 0.2);
+      color: var(--danger);
+      border-color: var(--danger);
     }
 
     /* Timeline Styling */
@@ -349,14 +423,74 @@
       margin-bottom: 10px;
     }
 
+    .time-tag-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
     .time-tag {
       background: rgba(56, 189, 248, 0.15);
       color: var(--primary);
       border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .time-edit-inputs {
+      display: none;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .time-input {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--primary);
+      color: white;
+      padding: 3px 6px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 700;
+      outline: none;
+      width: 75px;
+    }
+
+    .edit-time-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
       padding: 4px 10px;
       border-radius: 12px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .edit-time-btn:hover {
+      background: var(--primary);
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .save-time-btn {
+      background: var(--success);
+      color: #0f172a;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.78rem;
       font-weight: 700;
+      cursor: pointer;
+      display: none;
     }
 
     .tag-highlight {
@@ -379,6 +513,35 @@
       font-size: 0.9rem;
       color: #cbd5e1;
       line-height: 1.6;
+    }
+
+    /* Warning & Feasibility Box on Timeline Card */
+    .feasibility-item-msg {
+      margin-top: 10px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .msg-warn {
+      background: rgba(251, 191, 36, 0.12);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      color: #fde68a;
+    }
+
+    .msg-error {
+      background: rgba(248, 113, 113, 0.15);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      color: #fca5a5;
+    }
+
+    .msg-ok {
+      background: rgba(52, 211, 153, 0.1);
+      border: 1px solid rgba(52, 211, 153, 0.25);
+      color: #a7f3d0;
     }
 
     .tip-box {
@@ -812,7 +975,7 @@
     <!-- Navigation Tabs -->
     <div class="nav-tabs">
       <button class="tab-btn active" onclick="switchTab('itinerary', this)">
-        <i class="fa-solid fa-route"></i> 每日行程
+        <i class="fa-solid fa-route"></i> 每日行程 (可自訂時間)
       </button>
       <button class="tab-btn" onclick="switchTab('transit', this)">
         <i class="fa-solid fa-map-location-dot"></i> 交通與高德地鐵導航
@@ -833,351 +996,45 @@
       
       <!-- Day Chips Filter -->
       <div class="day-selector">
-        <div class="day-chip active" onclick="showDay(1, this)">
+        <div class="day-chip active" onclick="selectDay(1, this)">
           <div class="d-num">Day 1</div>
           <div class="d-title">龍陽路寄存 ➔ 豫園外灘</div>
           <div class="d-date">9/20 (週日)</div>
         </div>
-        <div class="day-chip" onclick="showDay(2, this)">
+        <div class="day-chip" onclick="selectDay(2, this)">
           <div class="d-num">Day 2</div>
           <div class="d-title">耀雪滑雪 ➔ 換迪士尼飯店</div>
           <div class="d-date">9/21 (週一)</div>
         </div>
-        <div class="day-chip" onclick="showDay(3, this)">
+        <div class="day-chip" onclick="selectDay(3, this)">
           <div class="d-num">Day 3</div>
           <div class="d-title">上海迪士尼全日攻略</div>
           <div class="d-date">9/22 (週二)</div>
         </div>
-        <div class="day-chip" onclick="showDay(4, this)">
+        <div class="day-chip" onclick="selectDay(4, this)">
           <div class="d-num">Day 4</div>
           <div class="d-title">武康路梧桐區 ➔ 返台</div>
           <div class="d-date">9/23 (週三)</div>
         </div>
       </div>
 
-      <!-- DAY 1 TIMELINE -->
-      <div id="day-1-timeline" class="day-timeline">
-        <div class="timeline">
-          
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 13:20 - 14:30</span>
-                <span class="tag-highlight">機場入境</span>
-              </div>
-              <h4>班機抵達上海浦東國際機場 (PVG T2)</h4>
-              <p>搭乘春秋航空 9C8952 抵達浦東機場 T2，辦理入境通關、領取行李並完成台胞證查驗。</p>
-              <div class="action-btn-row">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/marker?position=121.81055,31.14488&name=浦東國際機場T2" target="_blank">
-                  <i class="fa-solid fa-map-location-dot"></i> 高德地圖定位
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 14:30 - 15:15</span>
-                <span class="tag-highlight">順路寄存關鍵招</span>
-              </div>
-              <h4>直奔交通樞紐「龍陽路站」寄存大行李</h4>
-              <p>從浦東機場搭乘 <strong>磁懸浮列車 (僅需 8 分鐘)</strong> 或 <strong>地鐵 2 號線 (約 35 分鐘)</strong> 直達交通樞紐 <strong>龍陽路站</strong>。<br>
-              將大件行李寄存在龍陽路站自助寄存櫃（微信搜尋「途簡單」或「豐巢寄存包」），無需特地繞路先回臨港！</p>
-              <div class="tip-box">
-                💡 <strong>超神順路筆記：</strong>先寄行李在龍陽路站，去豫園與外灘完全不必背重行李，晚上取完行李直接在龍陽路搭乘 16 號線直達臨港飯店 Check-in，立省 1.5 小時來回車程！
-              </div>
-              <div class="action-btn-row">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.81055,31.14488,浦東國際機場T2&to=121.55776,31.20371,龍陽路地鐵站&mode=bus" target="_blank">
-                  <i class="fa-solid fa-train-subway"></i> 高德地圖 (含磁懸浮/地鐵)
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 15:30 - 19:00</span>
-                <span class="tag-highlight">聽勸必吃</span>
-              </div>
-              <h4>輕裝前往「豫園」＆ 採買裕蓮茶樓爆紅伴手禮</h4>
-              <p>從龍陽路站搭乘地鐵 2 號線至南京東路轉 10 號線（約 15-20 分鐘）抵達 <strong>豫園站</strong>。<br>
-              漫步豫園古風商圈，前往 <strong>裕蓮茶樓 (華寶樓1F)</strong> 購買聽勸爆紅伴手禮 <strong>「蔥香牛軋萬德福」</strong>，並品嚐正宗南翔小籠包與綠波廊點心。</p>
-              <div class="action-btn-row">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.55776,31.20371,龍陽路地鐵站&to=121.49216,31.22728,豫園華寶樓&mode=bus" target="_blank">
-                  <i class="fa-solid fa-train-subway"></i> 高德地圖地鐵路線
-                </a>
-                <button class="copy-btn" onclick="copyAddress('上海市黃浦區方浜中路265號華寶樓1樓裕蓮茶樓')">
-                  <i class="fa-regular fa-copy"></i> 複製裕蓮茶樓地址
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 19:15 - 20:45</span>
-                <span class="tag-highlight">聽勸夜景</span>
-              </div>
-              <h4>聽勸絕美夜景：北外灘打卡 ＆ 2 元浦江輪渡體驗</h4>
-              <p>❌ <strong>避坑提示：</strong>外灘正核心人潮極度擁擠，拍照背景全是人頭。<br>
-              💡 <strong>聽勸推薦：</strong><br>
-              1. <strong>前往「北外灘」：</strong>視野乾淨開闊，能輕鬆拍出東方明珠與陸家嘴天際線合照。<br>
-              2. <strong>搭乘「2元浦江輪渡」：</strong>從金陵東路碼頭搭乘渡輪至對岸，僅需 2 元人民幣即可在黃浦江面吹風賞夜景！</p>
-              <div class="action-btn-row">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.49216,31.22728,豫園&to=121.49752,31.24618,北外灘&mode=bus" target="_blank">
-                  <i class="fa-solid fa-train-subway"></i> 高德地圖路線
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 21:00 - 22:00</span>
-                <span class="tag-highlight">順路回程</span>
-              </div>
-              <h4>返回龍陽路站取行李 ➔ 地鐵16號線直達臨港入住</h4>
-              <p>搭地鐵返回龍陽路站取回寄存行李，轉乘 <strong>地鐵 16 號線 (大站車/直達車約 35 分鐘)</strong> 或打網約車直達「臨港冰雪明城飯店」Check-in 入住休息。</p>
-              <div class="action-btn-row">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.55776,31.20371,龍陽路地鐵站&to=121.93322,30.89312,臨港冰雪明城大酒店&mode=bus" target="_blank">
-                  <i class="fa-solid fa-train-subway"></i> 高德 16號線地鐵導航
-                </a>
-                <button class="copy-btn" onclick="copyAddress('上海市浦東新區臨港新片區南匯新城環湖西二路888號臨港冰雪明城飯店')">
-                  <i class="fa-regular fa-copy"></i> 複製臨港飯店地址
-                </button>
-              </div>
-            </div>
-          </div>
-
+      <!-- Feasibility Diagnostic Banner -->
+      <div class="feasibility-banner">
+        <div class="feasibility-status">
+          <span style="font-weight: 700; font-size: 0.95rem; color: white;">⚡ 當前行程可行性判斷：</span>
+          <span id="dayFeasibilityBadge" class="feasibility-badge badge-ok">
+            <i class="fa-solid fa-circle-check"></i> ✅ 時間充裕・行程安排合理
+          </span>
+        </div>
+        <div class="feasibility-controls">
+          <button class="reset-btn" onclick="resetCurrentDayItinerary()">
+            <i class="fa-solid fa-rotate-left"></i> 重置本頁時間
+          </button>
         </div>
       </div>
 
-      <!-- DAY 2 TIMELINE -->
-      <div id="day-2-timeline" class="day-timeline" style="display: none;">
-        <div class="timeline">
-          
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 09:00 - 13:00</span>
-                <span class="tag-highlight">極限冰雪</span>
-              </div>
-              <h4>「耀雪冰雪世界」全球最大室內滑雪體驗</h4>
-              <p>飯店距離耀雪冰雪世界極近，現場提供專業雪服與雪具租借，暢玩世界級室內滑雪道與冰雪娛樂設施！</p>
-              <div class="tip-box">
-                💡 <strong>滑雪小貼士：</strong>請自備厚長襪與防寒手套，現場門票包含雪服與雪靴。
-              </div>
-              <div class="action-btn-row">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.93322,30.89312,臨港冰雪明城大酒店&to=121.92110,30.89850,耀雪冰雪世界&mode=car" target="_blank">
-                  <i class="fa-solid fa-car"></i> 高德打車/導航
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 13:00 - 14:30</span>
-                <span class="tag-highlight">退房午餐</span>
-              </div>
-              <h4>臨港周邊美食午餐 ＆ 飯店 Check-out</h4>
-              <p>於臨港周邊享用午餐，返回臨港冰雪明城飯店辦理退房，並攜帶大件行李準備轉移至迪士尼周邊飯店。</p>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 14:30 - 15:30</span>
-                <span class="tag-highlight">飯店換會</span>
-              </div>
-              <h4>轉移至「上海漫庭飯店（迪士尼店）」入住</h4>
-              <p>搭乘網約車直達 Day 2 & Day 3 入住飯店「上海漫庭飯店（迪士尼店）」（車程約 40 分鐘），辦理入住放行李。</p>
-              <div class="action-btn-row">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.93322,30.89312,臨港冰雪明城大酒店&to=121.65751,31.13524,漫庭酒店(上海迪士尼店)&mode=car" target="_blank">
-                  <i class="fa-solid fa-taxi"></i> 高德網約車/開車路線
-                </a>
-                <button class="copy-btn" onclick="copyAddress('上海市浦東新區周浦鎮上海漫庭飯店迪士尼店')">
-                  <i class="fa-regular fa-copy"></i> 複製漫庭飯店地址
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 16:30 - 20:30</span>
-                <span class="tag-highlight">預熱購物</span>
-              </div>
-              <h4>迪士尼小鎮 (Disneytown) 提前散步與購買髮箍周邊</h4>
-              <p>搭飯店免費接駁車或打車前往迪士尼小鎮，逛迪士尼世界旗艦店採買拍照髮箍與周邊商品，享用晚餐並早點休息為隔天全日樂園蓄積能量。</p>
-              <div class="action-btn-row">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.65751,31.13524,漫庭酒店(上海迪士尼店)&to=121.65796,31.14151,迪士尼小鎮&mode=car" target="_blank">
-                  <i class="fa-solid fa-map-location-dot"></i> 高德路線
-                </a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- DAY 3 TIMELINE -->
-      <div id="day-3-timeline" class="day-timeline" style="display: none;">
-        <div class="timeline">
-          
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 07:30 - 08:30</span>
-                <span class="tag-highlight">早起入園</span>
-              </div>
-              <h4>早起入園 ＆ 綁定上海迪士尼度假區 App</h4>
-              <p>搭乘飯店免費接駁車早早抵達迪士尼樂園入園，開啟上海迪士尼 App 綁定門票。<br>
-              入園後第一時間搶抽「尊享卡 (FastPass)」或預約熱門設施。</p>
-              <div class="action-btn-row">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.65751,31.13524,漫庭酒店(上海迪士尼店)&to=121.65796,31.14151,上海迪士尼樂園&mode=car" target="_blank">
-                  <i class="fa-solid fa-map-location-dot"></i> 高德路線 (接駁/打車)
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 08:30 - 12:00</span>
-                <span class="tag-highlight">必衝熱門</span>
-              </div>
-              <h4>必衝 No.1：瘋狂動物城 (Zootopia) ＆ 創極速光輪</h4>
-              <p>直衝全球唯一的 <strong>瘋狂動物城「熱力追蹤」</strong>（體驗爪爪冰棒與大頭貼拍照打卡），接著挑戰明日世界 <strong>創極速光輪 (TRON)</strong>！</p>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 13:30 - 17:30</span>
-                <span class="tag-highlight">經典體驗</span>
-              </div>
-              <h4>必衝 No.2：加勒比海盜 ＆ 米奇巡遊與礦山車</h4>
-              <p>體驗沉浸式光影視覺巔峰 <strong>加勒比海盜——沉落寶藏之戰</strong>，觀看米奇童話專列大巡遊，並搭乘七個小矮人礦山車。</p>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 20:00 - 21:00</span>
-                <span class="tag-highlight">壓軸大秀</span>
-              </div>
-              <h4>壓軸大秀：奇夢之光幻影秀 (城堡煙火秀)</h4>
-              <p>提前在城堡前尋找良好視角，欣賞結合光雕投影、水舞與燦爛煙火的夜間大秀！秀後搭乘飯店接駁車返回漫庭飯店休息。</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- DAY 4 TIMELINE -->
-      <div id="day-4-timeline" class="day-timeline" style="display: none;">
-        <div class="timeline">
-          
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 09:30 - 11:00</span>
-                <span class="tag-highlight">退房寄存</span>
-              </div>
-              <h4>漫庭飯店退房與大行李寄存前台</h4>
-              <p>辦理 Check-out，將大件行李寄存於漫庭飯店前台，輕鬆出發進行最後半天的市區慢漫遊。</p>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 11:30 - 15:30</span>
-                <span class="tag-highlight">聽勸海派漫步</span>
-              </div>
-              <h4>「武康路」梧桐區漫步 ＆ 海派質感午餐</h4>
-              <p>💡 <strong>聽勸推薦：</strong>替代過度商業化的田子坊。<br>
-              打車至 <strong>武康路</strong>，打卡地標 <strong>武康大樓</strong>，漫步於梧桐樹蔭與歷史洋房街區，在風格咖啡館享用海派質感午餐。</p>
-              <div class="action-btn-row">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.65751,31.13524,漫庭酒店(上海迪士尼店)&to=121.44293,31.20087,武康大樓&mode=bus" target="_blank">
-                  <i class="fa-solid fa-train-subway"></i> 高德地圖地鐵/路線
-                </a>
-                <button class="copy-btn" onclick="copyAddress('上海市徐匯區淮海中路1850號武康大樓')">
-                  <i class="fa-regular fa-copy"></i> 複製武康大樓地址
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 16:00 - 16:30</span>
-                <span class="tag-highlight">取回行李</span>
-              </div>
-              <h4>返回漫庭飯店領取寄存行李</h4>
-              <p>搭車返回漫庭飯店領取寄存行李，準備直奔浦東國際機場 T2。</p>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 16:30 - 18:00</span>
-                <span class="tag-highlight">前往機場</span>
-              </div>
-              <h4>前往「浦東機場 T2」辦理登機</h4>
-              <p>搭乘網約車直達浦東機場 T2（車程約 30 分鐘），提前 2 小時完成登機報到與行李托運。</p>
-              <div class="action-btn-row">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.65751,31.13524,漫庭酒店(上海迪士尼店)&to=121.81055,31.14488,浦東國際機場T2&mode=car" target="_blank">
-                  <i class="fa-solid fa-taxi"></i> 高德打車路線
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <div class="timeline-header">
-                <span class="time-tag"><i class="fa-regular fa-clock"></i> 20:05 - 22:00</span>
-                <span class="tag-highlight">圓滿返台</span>
-              </div>
-              <h4>搭乘長榮 BR721 班機返台</h4>
-              <p>搭乘 20:05 起飛的航班返回台北桃園國際機場 T2，圓滿結束 4 天 3 夜上海夢幻之旅！</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
+      <!-- TIMELINE CONTAINER (Rendered via JS) -->
+      <div id="timelineContainer"></div>
 
     </div>
 
@@ -1394,7 +1251,7 @@
 
         <div class="check-item" onclick="toggleCheck('c2')">
           <input type="checkbox" id="c2" checked onclick="event.stopPropagation(); saveCheckState();">
-          <label for="c2">下載「微信 (WeChat)」並綁定台灣信用卡（開通微信支付）</label>
+          <label for="c2">下載「微信 (WeChat)」綁定台灣信用卡（開通微信支付）</label>
         </div>
 
         <div class="check-item" onclick="toggleCheck('c3')">
@@ -1475,6 +1332,463 @@
   <div id="toast" class="toast">地址已成功複製！</div>
 
   <script>
+    // Initial Default Itinerary Data
+    const initialItineraryData = {
+      1: [
+        {
+          id: "d1-1",
+          startTime: "13:20",
+          endTime: "14:30",
+          title: "班機抵達上海浦東國際機場 (PVG T2)",
+          tag: "機場入境",
+          desc: "搭乘春秋航空 9C8952 抵達浦東機場 T2，辦理入境通關、領取行李並完成台胞證查驗。",
+          minDuration: 50,
+          amapUrl: "https://uri.amap.com/marker?position=121.81055,31.14488&name=浦東國際機場T2",
+          amapBtnText: "高德地圖定位"
+        },
+        {
+          id: "d1-2",
+          startTime: "14:30",
+          endTime: "15:15",
+          title: "直奔交通樞紐「龍陽路站」寄存大行李",
+          tag: "順路寄存關鍵招",
+          desc: "從浦東機場搭乘 <strong>磁懸浮列車 (僅需 8 分鐘)</strong> 或 <strong>地鐵 2 號線 (約 35 分鐘)</strong> 直達交通樞紐 <strong>龍陽路站</strong>。<br>將大件行李寄存在龍陽路站自助寄存櫃（微信搜尋「途簡單」或「豐巢寄存包」），無需特地繞路先回臨港！",
+          tip: "💡 <strong>超神順路筆記：</strong>先寄行李在龍陽路站，去豫園與外灘完全不必背重行李，晚上取完行李直接在龍陽路搭乘 16 號線直達臨港飯店 Check-in，立省 1.5 小時來回車程！",
+          transitFromPrev: 30,
+          amapUrl: "https://uri.amap.com/navigation?from=121.81055,31.14488,浦東國際機場T2&to=121.55776,31.20371,龍陽路地鐵站&mode=bus",
+          amapBtnText: "高德地圖 (含磁懸浮/地鐵)"
+        },
+        {
+          id: "d1-3",
+          startTime: "15:30",
+          endTime: "19:00",
+          title: "輕裝前往「豫園」＆ 採買裕蓮茶樓爆紅伴手禮",
+          tag: "聽勸必吃",
+          desc: "從龍陽路站搭乘地鐵 2 號線至南京東路轉 10 號線（約 15-20 分鐘）抵達 <strong>豫園站</strong>。<br>漫步豫園古風商圈，前往 <strong>裕蓮茶樓 (華寶樓1F)</strong> 購買聽勸爆紅伴手禮 <strong>「蔥香牛軋萬德福」</strong>，並品嚐正宗南翔小籠包與綠波廊點心。",
+          copyAddr: "上海市黃浦區方浜中路265號華寶樓1樓裕蓮茶樓",
+          transitFromPrev: 15,
+          amapUrl: "https://uri.amap.com/navigation?from=121.55776,31.20371,龍陽路地鐵站&to=121.49216,31.22728,豫園華寶樓&mode=bus",
+          amapBtnText: "高德地圖地鐵路線"
+        },
+        {
+          id: "d1-4",
+          startTime: "19:15",
+          endTime: "20:45",
+          title: "聽勸絕美夜景：北外灘打卡 ＆ 2 元浦江輪渡體驗",
+          tag: "聽勸夜景",
+          desc: "❌ <strong>避坑提示：</strong>外灘正核心人潮極度擁擠。<br>💡 <strong>聽勸推薦：</strong>1. <strong>前往「北外灘」：</strong>視野乾淨開闊。2. <strong>搭乘「2元浦江輪渡」：</strong>吹風賞夜景！",
+          transitFromPrev: 15,
+          amapUrl: "https://uri.amap.com/navigation?from=121.49216,31.22728,豫園&to=121.49752,31.24618,北外灘&mode=bus",
+          amapBtnText: "高德地圖路線"
+        },
+        {
+          id: "d1-5",
+          startTime: "21:00",
+          endTime: "22:00",
+          title: "返回龍陽路站取行李 ➔ 地鐵16號線直達臨港入住",
+          tag: "順路回程",
+          desc: "搭地鐵返回龍陽路站取回寄存行李，轉乘 <strong>地鐵 16 號線 (大站車/直達車約 35 分鐘)</strong> 或打網約車直達「臨港冰雪明城飯店」Check-in 入住休息。",
+          copyAddr: "上海市浦東新區臨港新片區南匯新城環湖西二路888號臨港冰雪明城飯店",
+          transitFromPrev: 40,
+          amapUrl: "https://uri.amap.com/navigation?from=121.55776,31.20371,龍陽路地鐵站&to=121.93322,30.89312,臨港冰雪明城大酒店&mode=bus",
+          amapBtnText: "高德 16號線地鐵導航"
+        }
+      ],
+      2: [
+        {
+          id: "d2-1",
+          startTime: "09:00",
+          endTime: "13:00",
+          title: "「耀雪冰雪世界」全球最大室內滑雪體驗",
+          tag: "極限冰雪",
+          desc: "飯店距離耀雪冰雪世界極近，現場提供專業雪服與雪具租借，暢玩世界級室內滑雪道與冰雪娛樂設施！",
+          tip: "💡 <strong>滑雪小貼士：</strong>請自備厚長襪與防寒手套，現場門票包含雪服與雪靴。",
+          minDuration: 120,
+          amapUrl: "https://uri.amap.com/navigation?from=121.93322,30.89312,臨港冰雪明城大酒店&to=121.92110,30.89850,耀雪冰雪世界&mode=car",
+          amapBtnText: "高德打車/導航"
+        },
+        {
+          id: "d2-2",
+          startTime: "13:00",
+          endTime: "14:30",
+          title: "臨港周邊美食午餐 ＆ 飯店 Check-out",
+          tag: "退房午餐",
+          desc: "於臨港周邊享用午餐，返回臨港冰雪明城飯店辦理退房，並攜帶大件行李準備轉移至迪士尼周邊飯店。",
+          minDuration: 60,
+          transitFromPrev: 10
+        },
+        {
+          id: "d2-3",
+          startTime: "14:30",
+          endTime: "15:30",
+          title: "轉移至「上海漫庭飯店（迪士尼店）」入住",
+          tag: "飯店換會",
+          desc: "搭乘網約車直達 Day 2 & Day 3 入住飯店「上海漫庭飯店（迪士尼店）」（車程約 40 分鐘），辦理入住放行李。",
+          copyAddr: "上海市浦東新區周浦鎮上海漫庭飯店迪士尼店",
+          transitFromPrev: 40,
+          amapUrl: "https://uri.amap.com/navigation?from=121.93322,30.89312,臨港冰雪明城大酒店&to=121.65751,31.13524,漫庭酒店(上海迪士尼店)&mode=car",
+          amapBtnText: "高德網約車/開車路線"
+        },
+        {
+          id: "d2-4",
+          startTime: "16:30",
+          endTime: "20:30",
+          title: "迪士尼小鎮 (Disneytown) 提前散步與購買髮箍周邊",
+          tag: "預熱購物",
+          desc: "搭飯店免費接駁車或打車前往迪士尼小鎮，逛迪士尼世界旗艦店採買拍照髮箍與周邊商品，享用晚餐並早點休息為隔天全日樂園蓄積能量。",
+          transitFromPrev: 15,
+          amapUrl: "https://uri.amap.com/navigation?from=121.65751,31.13524,漫庭酒店(上海迪士尼店)&to=121.65796,31.14151,迪士尼小鎮&mode=car",
+          amapBtnText: "高德路線"
+        }
+      ],
+      3: [
+        {
+          id: "d3-1",
+          startTime: "07:30",
+          endTime: "08:30",
+          title: "早起入園 ＆ 綁定上海迪士尼度假區 App",
+          tag: "早起入園",
+          desc: "搭乘飯店免費接駁車早早抵達迪士尼樂園入園，開啟上海迪士尼 App 綁定門票。<br>入園後第一時間搶抽「尊享卡 (FastPass)」或預約熱門設施。",
+          transitFromPrev: 15,
+          amapUrl: "https://uri.amap.com/navigation?from=121.65751,31.13524,漫庭酒店(上海迪士尼店)&to=121.65796,31.14151,上海迪士尼樂園&mode=car",
+          amapBtnText: "高德路線 (接駁/打車)"
+        },
+        {
+          id: "d3-2",
+          startTime: "08:30",
+          endTime: "12:00",
+          title: "必衝 No.1：瘋狂動物城 (Zootopia) ＆ 創極速光輪",
+          tag: "必衝熱門",
+          desc: "直衝全球唯一的 <strong>瘋狂動物城「熱力追蹤」</strong>（體驗爪爪冰棒與大頭貼拍照打卡），接著挑戰明日世界 <strong>創極速光輪 (TRON)</strong>！",
+          minDuration: 120
+        },
+        {
+          id: "d3-3",
+          startTime: "13:30",
+          endTime: "17:30",
+          title: "必衝 No.2：加勒比海盜 ＆ 米奇巡遊與礦山車",
+          tag: "經典體驗",
+          desc: "體驗沉浸式光影視覺巔峰 <strong>加勒比海盜——沉落寶藏之戰</strong>，觀看米奇童話專列大巡遊，並搭乘七個小矮人礦山車。",
+          minDuration: 120
+        },
+        {
+          id: "d3-4",
+          startTime: "20:00",
+          endTime: "21:00",
+          title: "壓軸大秀：奇夢之光幻影秀 (城堡煙火秀)",
+          tag: "壓軸大秀",
+          desc: "提前在城堡前尋找良好視角，欣賞結合光雕投影、水舞與燦爛煙火的夜間大秀！秀後搭乘飯店接駁車返回漫庭飯店休息。",
+          minDuration: 45
+        }
+      ],
+      4: [
+        {
+          id: "d4-1",
+          startTime: "09:30",
+          endTime: "11:00",
+          title: "漫庭飯店退房與大行李寄存前台",
+          tag: "退房寄存",
+          desc: "辦理 Check-out，將大件行李寄存於漫庭飯店前台，輕鬆出發進行最後半天的市區慢漫遊。",
+          minDuration: 30
+        },
+        {
+          id: "d4-2",
+          startTime: "11:30",
+          endTime: "15:30",
+          title: "「武康路」梧桐區漫步 ＆ 海派質感午餐",
+          tag: "聽勸海派漫步",
+          desc: "💡 <strong>聽勸推薦：</strong>替代過度商業化的田子坊。<br>打車至 <strong>武康路</strong>，打卡地標 <strong>武康大樓</strong>，漫步於梧桐樹蔭與歷史洋房街區，在風格咖啡館享用海派質感午餐。",
+          copyAddr: "上海市徐匯區淮海中路1850號武康大樓",
+          transitFromPrev: 40,
+          amapUrl: "https://uri.amap.com/navigation?from=121.65751,31.13524,漫庭酒店(上海迪士尼店)&to=121.44293,31.20087,武康大樓&mode=bus",
+          amapBtnText: "高德地圖地鐵/路線"
+        },
+        {
+          id: "d4-3",
+          startTime: "16:00",
+          endTime: "16:30",
+          title: "返回漫庭飯店領取寄存行李",
+          tag: "取回行李",
+          desc: "搭車返回漫庭飯店領取寄存行李，準備直奔浦東國際機場 T2。",
+          transitFromPrev: 30
+        },
+        {
+          id: "d4-4",
+          startTime: "16:30",
+          endTime: "18:00",
+          title: "前往「浦東機場 T2」辦理登機",
+          tag: "前往機場",
+          desc: "搭乘網約車直達浦東機場 T2（車程約 30 分鐘），提前 2 小時完成登機報到與行李托運。",
+          transitFromPrev: 30,
+          amapUrl: "https://uri.amap.com/navigation?from=121.65751,31.13524,漫庭酒店(上海迪士尼店)&to=121.81055,31.14488,浦東國際機場T2&mode=car",
+          amapBtnText: "高德打車路線"
+        },
+        {
+          id: "d4-5",
+          startTime: "20:05",
+          endTime: "22:00",
+          title: "搭乘長榮 BR721 班機返台",
+          tag: "圓滿返台",
+          desc: "搭乘 20:05 起飛的航班返回台北桃園國際機場 T2，圓滿結束 4 天 3 夜上海夢幻之旅！",
+          minDuration: 60
+        }
+      ]
+    };
+
+    let currentDay = 1;
+    let itineraryData = {};
+
+    // Load or initialize itinerary data
+    function initItineraryData() {
+      const saved = localStorage.getItem('shanghai_custom_itinerary');
+      if (saved) {
+        try {
+          itineraryData = JSON.parse(saved);
+        } catch(e) {
+          itineraryData = JSON.parse(JSON.stringify(initialItineraryData));
+        }
+      } else {
+        itineraryData = JSON.parse(JSON.stringify(initialItineraryData));
+      }
+    }
+
+    function saveItineraryData() {
+      localStorage.setItem('shanghai_custom_itinerary', JSON.stringify(itineraryData));
+    }
+
+    // Convert HH:MM to total minutes
+    function timeToMins(tStr) {
+      if (!tStr) return 0;
+      const [h, m] = tStr.split(':').map(Number);
+      return h * 60 + m;
+    }
+
+    // Convert total minutes to HH:MM
+    function minsToTime(mins) {
+      const h = Math.floor(mins / 60) % 24;
+      const m = mins % 60;
+      return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+    }
+
+    // Feasibility Validator Engine
+    function validateDayFeasibility(dayNum) {
+      const items = itineraryData[dayNum] || [];
+      const issues = [];
+      let errorCount = 0;
+      let warnCount = 0;
+
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        const startMins = timeToMins(item.startTime);
+        const endMins = timeToMins(item.endTime);
+        const duration = endMins - startMins;
+
+        item.feasiStatus = 'ok';
+        item.feasiMsg = '';
+
+        // Check 1: Start time after End time
+        if (duration <= 0) {
+          item.feasiStatus = 'error';
+          item.feasiMsg = '❌ 結束時間不能早於或等於開始時間！';
+          errorCount++;
+          continue;
+        }
+
+        // Check 2: Minimum activity duration
+        if (item.minDuration && duration < item.minDuration) {
+          item.feasiStatus = 'warn';
+          item.feasiMsg = `⚠️ 此活動建議停留至少 ${item.minDuration} 分鐘，目前僅安排 ${duration} 分鐘，時間偏緊！`;
+          warnCount++;
+        }
+
+        // Check 3: Conflict / Overlap with previous item
+        if (i > 0) {
+          const prevItem = items[i - 1];
+          const prevEndMins = timeToMins(prevItem.endTime);
+
+          if (startMins < prevEndMins) {
+            item.feasiStatus = 'error';
+            item.feasiMsg = `❌ 時間與上一行程「${prevItem.title.substring(0, 10)}...」出現時間重疊衝突！`;
+            errorCount++;
+            continue;
+          }
+
+          // Check 4: Transit buffer gap
+          const gap = startMins - prevEndMins;
+          if (item.transitFromPrev && gap < item.transitFromPrev) {
+            item.feasiStatus = 'warn';
+            item.feasiMsg = `⚠️ 兩地預估交通需 ${item.transitFromPrev} 分鐘，目前轉乘時間僅留 ${gap} 分鐘，可能趕不及！`;
+            warnCount++;
+          }
+        }
+
+        // Anchor Rule 1: Day 1 Flight Arrival Landing & Luggage Check
+        if (dayNum === 1 && item.id === 'd1-1') {
+          if (startMins < timeToMins("13:20")) {
+            item.feasiStatus = 'error';
+            item.feasiMsg = '❌ 航班預計 13:20 才降落浦東機場 T2，無法安排更早時間！';
+            errorCount++;
+          }
+        }
+
+        // Anchor Rule 2: Day 4 Airport Departure Safety Check
+        if (dayNum === 4 && item.id === 'd4-4') {
+          if (endMins < timeToMins("18:00")) {
+            item.feasiStatus = 'warn';
+            item.feasiMsg = '⚠️ 長榮 BR721 於 20:05 起飛，強烈建議在 18:00 前抵達機場辦理登機。';
+            warnCount++;
+          }
+        }
+        if (dayNum === 4 && item.id === 'd4-5') {
+          if (startMins < timeToMins("20:05")) {
+            item.feasiStatus = 'error';
+            item.feasiMsg = '❌ 長榮 BR721 班機起飛時間為 20:05，請勿提前或延後航班時間！';
+            errorCount++;
+          }
+        }
+      }
+
+      // Update Overall Day Feasibility Badge
+      const badge = document.getElementById('dayFeasibilityBadge');
+      if (!badge) return;
+
+      if (errorCount > 0) {
+        badge.className = 'feasibility-badge badge-error';
+        badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ❌ 發現 ${errorCount} 處時間衝突（無法可行）`;
+      } else if (warnCount > 0) {
+        badge.className = 'feasibility-badge badge-warn';
+        badge.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ⚠️ 有 ${warnCount} 處轉乘時間緊湊（建議微調）`;
+      } else {
+        badge.className = 'feasibility-badge badge-ok';
+        badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> ✅ 時間充裕・行程安排合理`;
+      }
+    }
+
+    // Render Timeline Items for Active Day
+    function renderTimeline(dayNum) {
+      validateDayFeasibility(dayNum);
+      const container = document.getElementById('timelineContainer');
+      const items = itineraryData[dayNum] || [];
+
+      let html = '<div class="timeline">';
+      items.forEach((item, index) => {
+        let msgHtml = '';
+        if (item.feasiStatus === 'error') {
+          msgHtml = `<div class="feasibility-item-msg msg-error"><i class="fa-solid fa-circle-xmark"></i> ${item.feasiMsg}</div>`;
+        } else if (item.feasiStatus === 'warn') {
+          msgHtml = `<div class="feasibility-item-msg msg-warn"><i class="fa-solid fa-triangle-exclamation"></i> ${item.feasiMsg}</div>`;
+        }
+
+        let tipHtml = item.tip ? `<div class="tip-box">${item.tip}</div>` : '';
+        
+        let btnsHtml = '<div class="action-btn-row">';
+        if (item.amapUrl) {
+          btnsHtml += `<a class="copy-btn amap-btn" href="${item.amapUrl}" target="_blank"><i class="fa-solid fa-map-location-dot"></i> ${item.amapBtnText || '高德地圖'}</a>`;
+        }
+        if (item.copyAddr) {
+          btnsHtml += `<button class="copy-btn" onclick="copyAddress('${item.copyAddr}')"><i class="fa-regular fa-copy"></i> 複製地址</button>`;
+        }
+        btnsHtml += '</div>';
+
+        html += `
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <div class="time-tag-group">
+                  <span class="time-tag" id="tag-time-${item.id}">
+                    <i class="fa-regular fa-clock"></i> ${item.startTime} - ${item.endTime}
+                  </span>
+                  <div class="time-edit-inputs" id="edit-inputs-${item.id}">
+                    <input type="time" class="time-input" id="input-start-${item.id}" value="${item.startTime}">
+                    <span style="color: var(--text-muted); font-size: 0.8rem;">至</span>
+                    <input type="time" class="time-input" id="input-end-${item.id}" value="${item.endTime}">
+                  </div>
+                  <button class="edit-time-btn" id="btn-edit-${item.id}" onclick="enableTimeEdit('${item.id}')">
+                    <i class="fa-solid fa-pen-to-square"></i> 編輯時間
+                  </button>
+                  <button class="save-time-btn" id="btn-save-${item.id}" onclick="saveTimeEdit(${dayNum}, '${item.id}')">
+                    <i class="fa-solid fa-check"></i> 儲存
+                  </button>
+                </div>
+                <span class="tag-highlight">${item.tag}</span>
+              </div>
+              <h4>${item.title}</h4>
+              <p>${item.desc}</p>
+              ${msgHtml}
+              ${tipHtml}
+              ${btnsHtml}
+            </div>
+          </div>
+        `;
+      });
+      html += '</div>';
+
+      container.innerHTML = html;
+    }
+
+    // Toggle Time Edit Inputs
+    function enableTimeEdit(itemId) {
+      document.getElementById(`tag-time-${itemId}`).style.display = 'none';
+      document.getElementById(`edit-inputs-${itemId}`).style.display = 'inline-flex';
+      document.getElementById(`btn-edit-${itemId}`).style.display = 'none';
+      document.getElementById(`btn-save-${itemId}`).style.display = 'inline-flex';
+    }
+
+    // Save Edited Time
+    function saveTimeEdit(dayNum, itemId) {
+      const newStart = document.getElementById(`input-start-${itemId}`).value;
+      const newEnd = document.getElementById(`input-end-${itemId}`).value;
+
+      if (!newStart || !newEnd) {
+        alert("請選擇有效的開始與結束時間！");
+        return;
+      }
+
+      const item = itineraryData[dayNum].find(x => x.id === itemId);
+      if (item) {
+        item.startTime = newStart;
+        item.endTime = newEnd;
+        saveItineraryData();
+        renderTimeline(dayNum);
+        showToast(`已儲存修改：${newStart} - ${newEnd}`);
+      }
+    }
+
+    // Select Day Tab
+    function selectDay(dayNum, chip) {
+      currentDay = dayNum;
+      document.querySelectorAll('.day-chip').forEach(el => el.classList.remove('active'));
+      chip.classList.add('active');
+      renderTimeline(dayNum);
+    }
+
+    // Reset Day to Default
+    function resetCurrentDayItinerary() {
+      if (confirm(`確定要重置 Day ${currentDay} 的行程時間恢復預設值嗎？`)) {
+        itineraryData[currentDay] = JSON.parse(JSON.stringify(initialItineraryData[currentDay]));
+        saveItineraryData();
+        renderTimeline(currentDay);
+        showToast(`Day ${currentDay} 已重置為預設時間！`);
+      }
+    }
+
+    // Toast Notification
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 2500);
+    }
+
+    function copyAddress(addressText) {
+      navigator.clipboard.writeText(addressText).then(() => {
+        showToast(`已複製地址：${addressText}`);
+      });
+    }
+
     // Tab switching
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -1482,27 +1796,10 @@
       
       document.getElementById(tabId).classList.add('active');
       btn.classList.add('active');
-    }
 
-    // Day switching in Itinerary
-    function showDay(dayNum, chip) {
-      document.querySelectorAll('.day-timeline').forEach(el => el.style.display = 'none');
-      document.querySelectorAll('.day-chip').forEach(el => el.classList.remove('active'));
-      
-      document.getElementById(`day-${dayNum}-timeline`).style.display = 'block';
-      chip.classList.add('active');
-    }
-
-    // Copy Address Helper
-    function copyAddress(addressText) {
-      navigator.clipboard.writeText(addressText).then(() => {
-        const toast = document.getElementById('toast');
-        toast.innerText = `已複製地址：${addressText}`;
-        toast.style.display = 'block';
-        setTimeout(() => {
-          toast.style.display = 'none';
-        }, 2500);
-      });
+      if (tabId === 'itinerary') {
+        renderTimeline(currentDay);
+      }
     }
 
     // Checklist Helpers & LocalStorage
@@ -1576,11 +1873,10 @@
       document.getElementById('metroRoute').innerText = res.metroRoute;
       document.getElementById('metroTime').innerText = res.metroTime;
 
-      // Update Amap & Google Maps Links with Exact Coordinates & Names
+      // Update Amap & Google Maps Links
       const startObj = locationQueries[start] || { name: start, amap: start, lnglat: '' };
       const endObj = locationQueries[end] || { name: end, amap: end, lnglat: '' };
       
-      // Amap Navigation URL with precise coordinates and name parameters so origin is NEVER replaced by current location
       const amapUrl = `https://uri.amap.com/navigation?from=${startObj.lnglat},${encodeURIComponent(startObj.amap)}&to=${endObj.lnglat},${encodeURIComponent(endObj.amap)}&mode=bus&policy=1&src=travelapp`;
       const gmapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(startObj.name)}&destination=${encodeURIComponent(endObj.name)}`;
 
@@ -1590,6 +1886,8 @@
 
     // Initialize on load
     window.addEventListener('DOMContentLoaded', () => {
+      initItineraryData();
+      renderTimeline(currentDay);
       loadCheckState();
       calculateRoute();
     });
