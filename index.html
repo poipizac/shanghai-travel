@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>上海 4 天 3 夜夢幻行程 | 聽勸攻略 & 高德地圖地鐵導航</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.35);
+      --accent: #a855f7;
+      --accent-glow: rgba(168, 85, 247, 0.35);
+      --amap-blue: #0091FF;
+      --amap-glow: rgba(0, 145, 255, 0.4);
+      --success: #34d399;
+      --warning: #fbbf24;
+      --danger: #f87171;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --glass-bg: rgba(15, 23, 42, 0.75);
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Outfit', 'Noto Sans TC', sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding-bottom: 60px;
+      line-height: 1.6;
+      background-attachment: fixed;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Top Navigation Header */
+    header {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 0;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: white;
+      box-shadow: 0 0 20px var(--primary-glow);
+    }
+
+    .logo-text h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(to right, #ffffff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-text p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .header-badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #e2e8f0;
+      backdrop-filter: blur(8px);
+    }
+
+    .badge-pill i {
+      color: var(--primary);
+    }
+
+    /* Hero Summary Card */
+    .hero-summary {
+      margin: 24px 0;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-summary::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 16px;
+    }
+
+    .summary-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .summary-box:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
+
+    .summary-box h3 {
+      font-size: 0.9rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .summary-box p {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    /* Main Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tab-btn:hover {
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--text-main);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--primary), #0284c7);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+
+    /* Day Chips Filter inside Itinerary Tab */
+    .day-selector {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+      padding: 4px 0;
+    }
+
+    .day-chip {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 12px 18px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      min-width: 140px;
+      flex: 1;
+    }
+
+    .day-chip:hover {
+      border-color: var(--accent);
+      background: rgba(168, 85, 247, 0.1);
+    }
+
+    .day-chip.active {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(56, 189, 248, 0.2));
+      border-color: var(--accent);
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .day-chip .d-num {
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .day-chip.active .d-num {
+      color: #c084fc;
+    }
+
+    .day-chip .d-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: white;
+      margin: 2px 0;
+    }
+
+    .day-chip .d-date {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Timeline Styling */
+    .timeline {
+      position: relative;
+      padding-left: 28px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      bottom: 10px;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--primary), var(--accent), var(--success));
+      border-radius: 3px;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -28px;
+      top: 16px;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #0f172a;
+      border: 3px solid var(--primary);
+      box-shadow: 0 0 10px var(--primary-glow);
+      z-index: 2;
+    }
+
+    .timeline-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .timeline-card:hover {
+      transform: translateX(4px);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .time-tag {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .tag-highlight {
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .timeline-card h4 {
+      font-size: 1.1rem;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .timeline-card p {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    .tip-box {
+      margin-top: 12px;
+      background: rgba(251, 191, 36, 0.1);
+      border-left: 4px solid var(--warning);
+      padding: 10px 14px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.85rem;
+      color: #fde68a;
+    }
+
+    .action-btn-row {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      background: var(--primary);
+      color: #0f172a;
+      border-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .amap-btn {
+      background: rgba(0, 145, 255, 0.18);
+      border: 1px solid rgba(0, 145, 255, 0.4);
+      color: #60a5fa;
+    }
+
+    .amap-btn:hover {
+      background: var(--amap-blue);
+      color: white;
+      border-color: var(--amap-blue);
+    }
+
+    .amap-main-btn {
+      background: linear-gradient(135deg, #0091FF, #0052D9);
+      color: white;
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      margin-top: 14px;
+      box-shadow: 0 4px 15px var(--amap-glow);
+      transition: all 0.25s ease;
+    }
+
+    .amap-main-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 145, 255, 0.6);
+    }
+
+    .gmaps-sub-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      margin-top: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .gmaps-sub-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+    }
+
+    /* Transit Calculator */
+    .transit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .calc-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      backdrop-filter: blur(12px);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .form-control {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      color: white;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    .calc-result {
+      margin-top: 20px;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .res-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+    }
+
+    .res-row:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .res-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .res-val {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-align: right;
+    }
+
+    .address-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .info-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      transition: border-color 0.2s ease;
+    }
+
+    .info-card:hover {
+      border-color: var(--primary);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* Advice & Traps Grid */
+    .advice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .advice-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      backdrop-filter: blur(12px);
+    }
+
+    .advice-header {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 10px;
+    }
+
+    .trap-box {
+      background: rgba(248, 113, 113, 0.1);
+      border: 1px solid rgba(248, 113, 113, 0.25);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .trap-box h5 {
+      color: var(--danger);
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .good-box {
+      background: rgba(52, 211, 153, 0.1);
+      border: 1px solid rgba(52, 211, 153, 0.25);
+      border-radius: var(--radius-md);
+      padding: 14px;
+    }
+
+    .good-box h5 {
+      color: var(--success);
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Pre-trip Checklist */
+    .checklist-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      max-width: 800px;
+      margin: 0 auto;
+      backdrop-filter: blur(12px);
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      margin-bottom: 10px;
+      transition: background 0.2s ease;
+      cursor: pointer;
+    }
+
+    .check-item:hover {
+      background: rgba(30, 41, 59, 0.9);
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .check-item label {
+      cursor: pointer;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+      flex: 1;
+    }
+
+    .check-item input[type="checkbox"]:checked + label {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    /* Budget Planner Tab */
+    .budget-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .budget-stat {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.15));
+      border: 1px solid var(--primary-glow);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .budget-amount {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 8px 0;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: linear-gradient(135deg, var(--primary), #0284c7);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      display: none;
+      z-index: 1000;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .day-selector {
+        flex-direction: row;
+      }
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="container header-content">
+      <div class="logo">
+        <div class="logo-icon"><i class="fa-solid fa-plane-departure"></i></div>
+        <div class="logo-text">
+          <h1>上海 4 天 3 夜夢幻之旅</h1>
+          <p>聽勸避坑攻略 ＆ 高德地圖地鐵導航</p>
+        </div>
+      </div>
+      <div class="header-badges">
+        <div class="badge-pill"><i class="fa-solid fa-calendar-days"></i> 9/20 (日) - 9/23 (三)</div>
+        <div class="badge-pill"><i class="fa-solid fa-hotel"></i> 臨港冰雪明城 + 漫庭迪士尼</div>
+        <div class="badge-pill"><i class="fa-solid fa-ticket"></i> 春秋 9C8952 / 長榮 BR721</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <!-- Hero Summary Card -->
+    <div class="hero-summary">
+      <h2 style="font-size: 1.15rem; color: white; display: flex; align-items: center; gap: 8px;">
+        <i class="fa-solid fa-compass" style="color: var(--primary);"></i> 行程亮點與樞紐安排總覽
+      </h2>
+      <div class="summary-grid">
+        <div class="summary-box">
+          <h3><i class="fa-solid fa-plane"></i> 航班資訊</h3>
+          <p><strong>去程：</strong>春秋航空 9C8952 (13:20抵達 PVG T2)<br>
+             <strong>回程：</strong>長榮/立榮 BR721 (20:05起飛 PVG T2)</p>
+        </div>
+        <div class="summary-box">
+          <h3><i class="fa-solid fa-suitcase"></i> 寄存秘訣 (龍陽路站)</h3>
+          <p>D1 出機場搭磁懸浮/2號線直達「龍陽路站」寄存大行李，輕裝順逛豫園/外灘，晚間再搭16號線直達臨港飯店，省時2小時！</p>
+        </div>
+        <div class="summary-box">
+          <h3><i class="fa-solid fa-star"></i> 必訪亮點景點</h3>
+          <p>耀雪冰雪世界滑雪 ➔ 豫園裕蓮茶樓蔥香牛軋萬德福 ➔ 北外灘夜景與2元浦江輪渡 ➔ 上海迪士尼全日 ➔ 武康路梧桐區漫步。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('itinerary', this)">
+        <i class="fa-solid fa-route"></i> 每日行程
+      </button>
+      <button class="tab-btn" onclick="switchTab('transit', this)">
+        <i class="fa-solid fa-map-location-dot"></i> 交通與高德地鐵導航
+      </button>
+      <button class="tab-btn" onclick="switchTab('advice', this)">
+        <i class="fa-solid fa-shield-halved"></i> 聽勸避坑指南
+      </button>
+      <button class="tab-btn" onclick="switchTab('prep', this)">
+        <i class="fa-solid fa-list-check"></i> 行前準備與 App
+      </button>
+      <button class="tab-btn" onclick="switchTab('budget', this)">
+        <i class="fa-solid fa-wallet"></i> 預算與費用
+      </button>
+    </div>
+
+    <!-- TAB 1: ITINERARY -->
+    <div id="itinerary" class="tab-content active">
+      
+      <!-- Day Chips Filter -->
+      <div class="day-selector">
+        <div class="day-chip active" onclick="showDay(1, this)">
+          <div class="d-num">Day 1</div>
+          <div class="d-title">龍陽路寄存 ➔ 豫園外灘</div>
+          <div class="d-date">9/20 (週日)</div>
+        </div>
+        <div class="day-chip" onclick="showDay(2, this)">
+          <div class="d-num">Day 2</div>
+          <div class="d-title">耀雪滑雪 ➔ 換迪士尼飯店</div>
+          <div class="d-date">9/21 (週一)</div>
+        </div>
+        <div class="day-chip" onclick="showDay(3, this)">
+          <div class="d-num">Day 3</div>
+          <div class="d-title">上海迪士尼全日攻略</div>
+          <div class="d-date">9/22 (週二)</div>
+        </div>
+        <div class="day-chip" onclick="showDay(4, this)">
+          <div class="d-num">Day 4</div>
+          <div class="d-title">武康路梧桐區 ➔ 返台</div>
+          <div class="d-date">9/23 (週三)</div>
+        </div>
+      </div>
+
+      <!-- DAY 1 TIMELINE -->
+      <div id="day-1-timeline" class="day-timeline">
+        <div class="timeline">
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 13:20 - 14:30</span>
+                <span class="tag-highlight">機場入境</span>
+              </div>
+              <h4>班機抵達上海浦東國際機場 (PVG T2)</h4>
+              <p>搭乘春秋航空 9C8952 抵達浦東機場 T2，辦理入境通關、領取行李並完成台胞證查驗。</p>
+              <div class="action-btn-row">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/marker?position=121.81055,31.14488&name=浦東國際機場T2" target="_blank">
+                  <i class="fa-solid fa-map-location-dot"></i> 高德地圖定位
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 14:30 - 15:15</span>
+                <span class="tag-highlight">順路寄存關鍵招</span>
+              </div>
+              <h4>直奔交通樞紐「龍陽路站」寄存大行李</h4>
+              <p>從浦東機場搭乘 <strong>磁懸浮列車 (僅需 8 分鐘)</strong> 或 <strong>地鐵 2 號線 (約 35 分鐘)</strong> 直達交通樞紐 <strong>龍陽路站</strong>。<br>
+              將大件行李寄存在龍陽路站自助寄存櫃（微信搜尋「途簡單」或「豐巢寄存包」），無需特地繞路先回臨港！</p>
+              <div class="tip-box">
+                💡 <strong>超神順路筆記：</strong>先寄行李在龍陽路站，去豫園與外灘完全不必背重行李，晚上取完行李直接在龍陽路搭乘 16 號線直達臨港飯店 Check-in，立省 1.5 小時來回車程！
+              </div>
+              <div class="action-btn-row">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.81055,31.14488,浦東國際機場T2&to=121.55776,31.20371,龍陽路地鐵站&mode=bus" target="_blank">
+                  <i class="fa-solid fa-train-subway"></i> 高德地圖 (含磁懸浮/地鐵)
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 15:30 - 19:00</span>
+                <span class="tag-highlight">聽勸必吃</span>
+              </div>
+              <h4>輕裝前往「豫園」＆ 採買裕蓮茶樓爆紅伴手禮</h4>
+              <p>從龍陽路站搭乘地鐵 2 號線至南京東路轉 10 號線（約 15-20 分鐘）抵達 <strong>豫園站</strong>。<br>
+              漫步豫園古風商圈，前往 <strong>裕蓮茶樓 (華寶樓1F)</strong> 購買聽勸爆紅伴手禮 <strong>「蔥香牛軋萬德福」</strong>，並品嚐正宗南翔小籠包與綠波廊點心。</p>
+              <div class="action-btn-row">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.55776,31.20371,龍陽路地鐵站&to=121.49216,31.22728,豫園華寶樓&mode=bus" target="_blank">
+                  <i class="fa-solid fa-train-subway"></i> 高德地圖地鐵路線
+                </a>
+                <button class="copy-btn" onclick="copyAddress('上海市黃浦區方浜中路265號華寶樓1樓裕蓮茶樓')">
+                  <i class="fa-regular fa-copy"></i> 複製裕蓮茶樓地址
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 19:15 - 20:45</span>
+                <span class="tag-highlight">聽勸夜景</span>
+              </div>
+              <h4>聽勸絕美夜景：北外灘打卡 ＆ 2 元浦江輪渡體驗</h4>
+              <p>❌ <strong>避坑提示：</strong>外灘正核心人潮極度擁擠，拍照背景全是人頭。<br>
+              💡 <strong>聽勸推薦：</strong><br>
+              1. <strong>前往「北外灘」：</strong>視野乾淨開闊，能輕鬆拍出東方明珠與陸家嘴天際線合照。<br>
+              2. <strong>搭乘「2元浦江輪渡」：</strong>從金陵東路碼頭搭乘渡輪至對岸，僅需 2 元人民幣即可在黃浦江面吹風賞夜景！</p>
+              <div class="action-btn-row">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.49216,31.22728,豫園&to=121.49752,31.24618,北外灘&mode=bus" target="_blank">
+                  <i class="fa-solid fa-train-subway"></i> 高德地圖路線
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 21:00 - 22:00</span>
+                <span class="tag-highlight">順路回程</span>
+              </div>
+              <h4>返回龍陽路站取行李 ➔ 地鐵16號線直達臨港入住</h4>
+              <p>搭地鐵返回龍陽路站取回寄存行李，轉乘 <strong>地鐵 16 號線 (大站車/直達車約 35 分鐘)</strong> 或打網約車直達「臨港冰雪明城飯店」Check-in 入住休息。</p>
+              <div class="action-btn-row">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.55776,31.20371,龍陽路地鐵站&to=121.93322,30.89312,臨港冰雪明城大酒店&mode=bus" target="_blank">
+                  <i class="fa-solid fa-train-subway"></i> 高德 16號線地鐵導航
+                </a>
+                <button class="copy-btn" onclick="copyAddress('上海市浦東新區臨港新片區南匯新城環湖西二路888號臨港冰雪明城飯店')">
+                  <i class="fa-regular fa-copy"></i> 複製臨港飯店地址
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- DAY 2 TIMELINE -->
+      <div id="day-2-timeline" class="day-timeline" style="display: none;">
+        <div class="timeline">
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 09:00 - 13:00</span>
+                <span class="tag-highlight">極限冰雪</span>
+              </div>
+              <h4>「耀雪冰雪世界」全球最大室內滑雪體驗</h4>
+              <p>飯店距離耀雪冰雪世界極近，現場提供專業雪服與雪具租借，暢玩世界級室內滑雪道與冰雪娛樂設施！</p>
+              <div class="tip-box">
+                💡 <strong>滑雪小貼士：</strong>請自備厚長襪與防寒手套，現場門票包含雪服與雪靴。
+              </div>
+              <div class="action-btn-row">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.93322,30.89312,臨港冰雪明城大酒店&to=121.92110,30.89850,耀雪冰雪世界&mode=car" target="_blank">
+                  <i class="fa-solid fa-car"></i> 高德打車/導航
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 13:00 - 14:30</span>
+                <span class="tag-highlight">退房午餐</span>
+              </div>
+              <h4>臨港周邊美食午餐 ＆ 飯店 Check-out</h4>
+              <p>於臨港周邊享用午餐，返回臨港冰雪明城飯店辦理退房，並攜帶大件行李準備轉移至迪士尼周邊飯店。</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 14:30 - 15:30</span>
+                <span class="tag-highlight">飯店換會</span>
+              </div>
+              <h4>轉移至「上海漫庭飯店（迪士尼店）」入住</h4>
+              <p>搭乘網約車直達 Day 2 & Day 3 入住飯店「上海漫庭飯店（迪士尼店）」（車程約 40 分鐘），辦理入住放行李。</p>
+              <div class="action-btn-row">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.93322,30.89312,臨港冰雪明城大酒店&to=121.65751,31.13524,漫庭酒店(上海迪士尼店)&mode=car" target="_blank">
+                  <i class="fa-solid fa-taxi"></i> 高德網約車/開車路線
+                </a>
+                <button class="copy-btn" onclick="copyAddress('上海市浦東新區周浦鎮上海漫庭飯店迪士尼店')">
+                  <i class="fa-regular fa-copy"></i> 複製漫庭飯店地址
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 16:30 - 20:30</span>
+                <span class="tag-highlight">預熱購物</span>
+              </div>
+              <h4>迪士尼小鎮 (Disneytown) 提前散步與購買髮箍周邊</h4>
+              <p>搭飯店免費接駁車或打車前往迪士尼小鎮，逛迪士尼世界旗艦店採買拍照髮箍與周邊商品，享用晚餐並早點休息為隔天全日樂園蓄積能量。</p>
+              <div class="action-btn-row">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.65751,31.13524,漫庭酒店(上海迪士尼店)&to=121.65796,31.14151,迪士尼小鎮&mode=car" target="_blank">
+                  <i class="fa-solid fa-map-location-dot"></i> 高德路線
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- DAY 3 TIMELINE -->
+      <div id="day-3-timeline" class="day-timeline" style="display: none;">
+        <div class="timeline">
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 07:30 - 08:30</span>
+                <span class="tag-highlight">早起入園</span>
+              </div>
+              <h4>早起入園 ＆ 綁定上海迪士尼度假區 App</h4>
+              <p>搭乘飯店免費接駁車早早抵達迪士尼樂園入園，開啟上海迪士尼 App 綁定門票。<br>
+              入園後第一時間搶抽「尊享卡 (FastPass)」或預約熱門設施。</p>
+              <div class="action-btn-row">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.65751,31.13524,漫庭酒店(上海迪士尼店)&to=121.65796,31.14151,上海迪士尼樂園&mode=car" target="_blank">
+                  <i class="fa-solid fa-map-location-dot"></i> 高德路線 (接駁/打車)
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 08:30 - 12:00</span>
+                <span class="tag-highlight">必衝熱門</span>
+              </div>
+              <h4>必衝 No.1：瘋狂動物城 (Zootopia) ＆ 創極速光輪</h4>
+              <p>直衝全球唯一的 <strong>瘋狂動物城「熱力追蹤」</strong>（體驗爪爪冰棒與大頭貼拍照打卡），接著挑戰明日世界 <strong>創極速光輪 (TRON)</strong>！</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 13:30 - 17:30</span>
+                <span class="tag-highlight">經典體驗</span>
+              </div>
+              <h4>必衝 No.2：加勒比海盜 ＆ 米奇巡遊與礦山車</h4>
+              <p>體驗沉浸式光影視覺巔峰 <strong>加勒比海盜——沉落寶藏之戰</strong>，觀看米奇童話專列大巡遊，並搭乘七個小矮人礦山車。</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 20:00 - 21:00</span>
+                <span class="tag-highlight">壓軸大秀</span>
+              </div>
+              <h4>壓軸大秀：奇夢之光幻影秀 (城堡煙火秀)</h4>
+              <p>提前在城堡前尋找良好視角，欣賞結合光雕投影、水舞與燦爛煙火的夜間大秀！秀後搭乘飯店接駁車返回漫庭飯店休息。</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- DAY 4 TIMELINE -->
+      <div id="day-4-timeline" class="day-timeline" style="display: none;">
+        <div class="timeline">
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 09:30 - 11:00</span>
+                <span class="tag-highlight">退房寄存</span>
+              </div>
+              <h4>漫庭飯店退房與大行李寄存前台</h4>
+              <p>辦理 Check-out，將大件行李寄存於漫庭飯店前台，輕鬆出發進行最後半天的市區慢漫遊。</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 11:30 - 15:30</span>
+                <span class="tag-highlight">聽勸海派漫步</span>
+              </div>
+              <h4>「武康路」梧桐區漫步 ＆ 海派質感午餐</h4>
+              <p>💡 <strong>聽勸推薦：</strong>替代過度商業化的田子坊。<br>
+              打車至 <strong>武康路</strong>，打卡地標 <strong>武康大樓</strong>，漫步於梧桐樹蔭與歷史洋房街區，在風格咖啡館享用海派質感午餐。</p>
+              <div class="action-btn-row">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.65751,31.13524,漫庭酒店(上海迪士尼店)&to=121.44293,31.20087,武康大樓&mode=bus" target="_blank">
+                  <i class="fa-solid fa-train-subway"></i> 高德地圖地鐵/路線
+                </a>
+                <button class="copy-btn" onclick="copyAddress('上海市徐匯區淮海中路1850號武康大樓')">
+                  <i class="fa-regular fa-copy"></i> 複製武康大樓地址
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 16:00 - 16:30</span>
+                <span class="tag-highlight">取回行李</span>
+              </div>
+              <h4>返回漫庭飯店領取寄存行李</h4>
+              <p>搭車返回漫庭飯店領取寄存行李，準備直奔浦東國際機場 T2。</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 16:30 - 18:00</span>
+                <span class="tag-highlight">前往機場</span>
+              </div>
+              <h4>前往「浦東機場 T2」辦理登機</h4>
+              <p>搭乘網約車直達浦東機場 T2（車程約 30 分鐘），提前 2 小時完成登機報到與行李托運。</p>
+              <div class="action-btn-row">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/navigation?from=121.65751,31.13524,漫庭酒店(上海迪士尼店)&to=121.81055,31.14488,浦東國際機場T2&mode=car" target="_blank">
+                  <i class="fa-solid fa-taxi"></i> 高德打車路線
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="time-tag"><i class="fa-regular fa-clock"></i> 20:05 - 22:00</span>
+                <span class="tag-highlight">圓滿返台</span>
+              </div>
+              <h4>搭乘長榮 BR721 班機返台</h4>
+              <p>搭乘 20:05 起飛的航班返回台北桃園國際機場 T2，圓滿結束 4 天 3 夜上海夢幻之旅！</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB 2: TRANSIT & ADDRESS CALCULATOR -->
+    <div id="transit" class="tab-content">
+      <div class="transit-grid">
+        
+        <!-- Calculator Form -->
+        <div class="calc-card">
+          <h3 style="color: white; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-calculator" style="color: var(--primary);"></i> 路線車程與車資動態估算器
+          </h3>
+          
+          <div class="form-group">
+            <label for="startLoc"><i class="fa-solid fa-location-dot"></i> 出發地 (From):</label>
+            <select id="startLoc" class="form-control" onchange="calculateRoute()">
+              <option value="pvg">浦東國際機場 T2</option>
+              <option value="longyang">龍陽路站 (寄存樞紐)</option>
+              <option value="lingang">臨港冰雪明城飯店</option>
+              <option value="yuyuan">豫園 / 華寶樓</option>
+              <option value="manting">上海漫庭飯店 (迪士尼店)</option>
+              <option value="disney">上海迪士尼樂園</option>
+              <option value="wukang">武康路 / 武康大樓</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="endLoc"><i class="fa-solid fa-location-flag"></i> 目的地 (To):</label>
+            <select id="endLoc" class="form-control" onchange="calculateRoute()">
+              <option value="longyang">龍陽路站 (寄存樞紐)</option>
+              <option value="lingang" selected>臨港冰雪明城飯店</option>
+              <option value="yuyuan">豫園 / 華寶樓</option>
+              <option value="bund">北外灘 / 外灘</option>
+              <option value="manting">上海漫庭飯店 (迪士尼店)</option>
+              <option value="disney">上海迪士尼樂園</option>
+              <option value="wukang">武康路 / 武康大樓</option>
+              <option value="pvg">浦東國際機場 T2</option>
+            </select>
+          </div>
+
+          <div class="calc-result">
+            <div class="res-row">
+              <div class="res-label"><i class="fa-solid fa-car" style="color: var(--primary);"></i> 網約車/滴滴預估時間:</div>
+              <div class="res-val" id="didiTime">35 - 40 分鐘</div>
+            </div>
+            <div class="res-row">
+              <div class="res-label"><i class="fa-solid fa-coins" style="color: var(--warning);"></i> 滴滴預估車資:</div>
+              <div class="res-val" id="didiCost">約 ¥90 - 110 RMB (NT$ 400 - 490)</div>
+            </div>
+            <div class="res-row">
+              <div class="res-label"><i class="fa-solid fa-train-subway" style="color: var(--accent);"></i> 地鐵推薦路線:</div>
+              <div class="res-val" id="metroRoute">地鐵 16號線 直達/打車最推薦</div>
+            </div>
+            <div class="res-row">
+              <div class="res-label"><i class="fa-regular fa-clock" style="color: var(--success);"></i> 地鐵預估時間與車資:</div>
+              <div class="res-val" id="metroTime">約 50 分鐘 (車資 ¥7)</div>
+            </div>
+          </div>
+
+          <!-- Dynamic Amap & Google Maps Buttons -->
+          <a id="amapBtn" class="amap-main-btn" href="#" target="_blank">
+            <i class="fa-solid fa-train-subway"></i> 🗺️ 一鍵開啟高德地圖規劃路線 (含地鐵轉乘)
+          </a>
+          <a id="gmapsBtn" class="gmaps-sub-btn" href="#" target="_blank">
+            <i class="fa-solid fa-globe"></i> 備用：開啟 Google 地圖
+          </a>
+        </div>
+
+        <!-- Address List -->
+        <div class="calc-card">
+          <h3 style="color: white; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-map-pin" style="color: var(--accent);"></i> 一鍵複製中文地址 ＆ 高德地圖
+          </h3>
+          <div class="address-list">
+            
+            <div class="info-card">
+              <div>
+                <div style="font-weight: 700; font-size: 0.95rem;">臨港冰雪明城飯店</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">上海市浦東新區臨港新片區南匯新城</div>
+              </div>
+              <div class="btn-group">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/marker?position=121.93322,30.89312&name=臨港冰雪明城大酒店" target="_blank">
+                  <i class="fa-solid fa-map-location-dot"></i> 高德
+                </a>
+                <button class="copy-btn" onclick="copyAddress('上海市浦東新區臨港新片區南匯新城環湖西二路888號臨港冰雪明城飯店')">
+                  <i class="fa-regular fa-copy"></i> 複製地址
+                </button>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div>
+                <div style="font-weight: 700; font-size: 0.95rem;">上海漫庭飯店（迪士尼店）</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">上海市浦東新區迪士尼周邊</div>
+              </div>
+              <div class="btn-group">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/marker?position=121.65751,31.13524&name=漫庭酒店(上海迪士尼店)" target="_blank">
+                  <i class="fa-solid fa-map-location-dot"></i> 高德
+                </a>
+                <button class="copy-btn" onclick="copyAddress('上海市浦東新區周浦鎮上海漫庭飯店迪士尼店')">
+                  <i class="fa-regular fa-copy"></i> 複製地址
+                </button>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div>
+                <div style="font-weight: 700; font-size: 0.95rem;">裕蓮茶樓（豫園華寶樓店）</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">上海市黃浦區方浜中路265號1樓</div>
+              </div>
+              <div class="btn-group">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/marker?position=121.49216,31.22728&name=豫園華寶樓" target="_blank">
+                  <i class="fa-solid fa-map-location-dot"></i> 高德
+                </a>
+                <button class="copy-btn" onclick="copyAddress('上海市黃浦區方浜中路265號華寶樓1樓裕蓮茶樓')">
+                  <i class="fa-regular fa-copy"></i> 複製地址
+                </button>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div>
+                <div style="font-weight: 700; font-size: 0.95rem;">武康大樓（武康路梧桐區）</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">上海市徐匯區淮海中路1850號</div>
+              </div>
+              <div class="btn-group">
+                <a class="copy-btn amap-btn" href="https://uri.amap.com/marker?position=121.44293,31.20087&name=武康大樓" target="_blank">
+                  <i class="fa-solid fa-map-location-dot"></i> 高德
+                </a>
+                <button class="copy-btn" onclick="copyAddress('上海市徐匯區淮海中路1850號武康大樓')">
+                  <i class="fa-regular fa-copy"></i> 複製地址
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 3: ADVICE & TRAPS -->
+    <div id="advice" class="tab-content">
+      <div class="advice-grid">
+        
+        <div class="advice-card">
+          <div class="advice-header"><i class="fa-solid fa-camera" style="color: var(--primary);"></i> 1. 夜景與高空打卡</div>
+          <div class="trap-box">
+            <h5><i class="fa-solid fa-xmark"></i> 不聽勸避坑點</h5>
+            <p style="font-size: 0.85rem; color: #cbd5e1;">
+              1. 擠在外灘正核心：人潮極度擁擠，拍照背景全是人頭。<br>
+              2. 東方明珠高空：門票貴且排隊預約耗時長。<br>
+              3. 外灘觀光隧道：票價 50 元但視覺效果極普通。
+            </p>
+          </div>
+          <div class="good-box">
+            <h5><i class="fa-solid fa-lightbulb"></i> 聽勸推薦平替</h5>
+            <p style="font-size: 0.85rem; color: #cbd5e1;">
+              1. <strong>去「北外灘」：</strong>視野乾淨開闊，能同時把東方明珠與陸家嘴拍進打卡大片。<br>
+              2. <strong>搭 2 元「浦江輪渡」：</strong>只需 2 元人民幣，在江面上吹風欣賞璀璨江景。<br>
+              3. <strong>「白玉蘭廣場人民咖啡館」：</strong>免費/無強制高額低消的高空視角。
+            </p>
+          </div>
+        </div>
+
+        <div class="advice-card">
+          <div class="advice-header"><i class="fa-solid fa-cookie-bite" style="color: var(--accent);"></i> 2. 伴手禮與小吃選擇</div>
+          <div class="trap-box">
+            <h5><i class="fa-solid fa-xmark"></i> 不聽勸避坑點</h5>
+            <p style="font-size: 0.85rem; color: #cbd5e1;">
+              1. 景點無名大灌湯包：價格偏貴皮厚餡少。<br>
+              2. 購買超商普通盒裝餅乾作為伴手禮。
+            </p>
+          </div>
+          <div class="good-box">
+            <h5><i class="fa-solid fa-lightbulb"></i> 聽勸推薦平替</h5>
+            <p style="font-size: 0.85rem; color: #cbd5e1;">
+              1. <strong>裕蓮茶樓「蔥香牛軋萬德福」：</strong>位於豫園華寶樓 1F，蔥香+千層酥+牛軋糖，烤過後超香！<br>
+              2. <strong>南翔小籠包 / 綠波廊糕點：</strong>經典傳統老字號，口味經過時間驗證。
+            </p>
+          </div>
+        </div>
+
+        <div class="advice-card">
+          <div class="advice-header"><i class="fa-solid fa-tree" style="color: var(--success);"></i> 3. 老街與街區漫步</div>
+          <div class="trap-box">
+            <h5><i class="fa-solid fa-xmark"></i> 不聽勸避坑點</h5>
+            <p style="font-size: 0.85rem; color: #cbd5e1;">
+              1. 去「田子坊」：商業化相當嚴重、店面同質性高、千篇一律。
+            </p>
+          </div>
+          <div class="good-box">
+            <h5><i class="fa-solid fa-lightbulb"></i> 聽勸推薦平替</h5>
+            <p style="font-size: 0.85rem; color: #cbd5e1;">
+              1. <strong>去「武康路 / 安福路」：</strong>沿街有漂亮的梧桐樹與歷史花園洋房，感受真正的海派浪漫與慢節奏生活。
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 4: PRE-TRIP CHECKLIST -->
+    <div id="prep" class="tab-content">
+      <div class="checklist-card">
+        <h3 style="margin-bottom: 20px; color: var(--primary); display: flex; align-items: center; gap: 10px;">
+          <i class="fa-solid fa-clipboard-check"></i> 行前準備與必備 App 清單
+        </h3>
+        
+        <div class="check-item" onclick="toggleCheck('c1')">
+          <input type="checkbox" id="c1" checked onclick="event.stopPropagation(); saveCheckState();">
+          <label for="c1">台胞證（檢查有效期限 6 個月以上）與護照</label>
+        </div>
+
+        <div class="check-item" onclick="toggleCheck('c2')">
+          <input type="checkbox" id="c2" checked onclick="event.stopPropagation(); saveCheckState();">
+          <label for="c2">下載「微信 (WeChat)」並綁定台灣信用卡（開通微信支付）</label>
+        </div>
+
+        <div class="check-item" onclick="toggleCheck('c3')">
+          <input type="checkbox" id="c3" checked onclick="event.stopPropagation(); saveCheckState();">
+          <label for="c3">下載「支付寶 (Alipay)」綁定信用卡，並領取上海地鐵乘車碼</label>
+        </div>
+
+        <div class="check-item" onclick="toggleCheck('c4')">
+          <input type="checkbox" id="c4" onclick="event.stopPropagation(); saveCheckState();">
+          <label for="c4">下載「上海迪士尼度假區 App」並預先註冊帳號</label>
+        </div>
+
+        <div class="check-item" onclick="toggleCheck('c5')">
+          <input type="checkbox" id="c5" onclick="event.stopPropagation(); saveCheckState();">
+          <label for="c5">開通中港澳漫遊 eSIM / SIM卡（免翻牆暢連 LINE/FB/IG）</label>
+        </div>
+
+        <div class="check-item" onclick="toggleCheck('c6')">
+          <input type="checkbox" id="c6" onclick="event.stopPropagation(); saveCheckState();">
+          <label for="c6">預訂耀雪冰雪世界滑雪門票</label>
+        </div>
+
+        <div class="check-item" onclick="toggleCheck('c7')">
+          <input type="checkbox" id="c7" onclick="event.stopPropagation(); saveCheckState();">
+          <label for="c7">下載「高德地圖 / 百度地圖 App」精準導航與地鐵規劃</label>
+        </div>
+
+        <div class="check-item" onclick="toggleCheck('c8')">
+          <input type="checkbox" id="c8" onclick="event.stopPropagation(); saveCheckState();">
+          <label for="c8">下載「大眾點評 App」查詢周邊美食與團購優惠</label>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 5: BUDGET & EXPENSES -->
+    <div id="budget" class="tab-content">
+      <div class="budget-grid">
+        
+        <div class="budget-stat">
+          <h3 style="color: white; font-size: 1.1rem;"><i class="fa-solid fa-coins" style="color: var(--warning);"></i> 預估總花費 (單人)</h3>
+          <div class="budget-amount">NT$ 20,100</div>
+          <p style="color: var(--text-muted); font-size: 0.85rem;">約 ¥4,520 RMB</p>
+        </div>
+
+        <div class="calc-card" style="grid-column: span 2;">
+          <h3 style="color: white; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-receipt" style="color: var(--success);"></i> 預算細項拆解
+          </h3>
+          <div class="res-row">
+            <div class="res-label"><i class="fa-solid fa-plane"></i> 來回機票 (春秋/長榮)</div>
+            <div class="res-val">NT$ 6,500 (約 ¥1,460 RMB)</div>
+          </div>
+          <div class="res-row">
+            <div class="res-label"><i class="fa-solid fa-bed"></i> 住宿 (臨港1晚 + 漫庭2晚)</div>
+            <div class="res-val">NT$ 4,200 (約 ¥940 RMB)</div>
+          </div>
+          <div class="res-row">
+            <div class="res-label"><i class="fa-solid fa-ticket"></i> 門票 (迪士尼 + 耀雪滑雪)</div>
+            <div class="res-val">NT$ 4,200 (約 ¥940 RMB)</div>
+          </div>
+          <div class="res-row">
+            <div class="res-label"><i class="fa-solid fa-car"></i> 交通 (滴滴 + 磁懸浮 + 地鐵)</div>
+            <div class="res-val">NT$ 1,200 (約 ¥270 RMB)</div>
+          </div>
+          <div class="res-row">
+            <div class="res-label"><i class="fa-solid fa-utensils"></i> 餐飲與伴手禮 (裕蓮茶樓/小籠包)</div>
+            <div class="res-val">NT$ 4,000 (約 ¥910 RMB)</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">地址已成功複製！</div>
+
+  <script>
+    // Tab switching
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-tabs .tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // Day switching in Itinerary
+    function showDay(dayNum, chip) {
+      document.querySelectorAll('.day-timeline').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.day-chip').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(`day-${dayNum}-timeline`).style.display = 'block';
+      chip.classList.add('active');
+    }
+
+    // Copy Address Helper
+    function copyAddress(addressText) {
+      navigator.clipboard.writeText(addressText).then(() => {
+        const toast = document.getElementById('toast');
+        toast.innerText = `已複製地址：${addressText}`;
+        toast.style.display = 'block';
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 2500);
+      });
+    }
+
+    // Checklist Helpers & LocalStorage
+    function toggleCheck(id) {
+      const cb = document.getElementById(id);
+      cb.checked = !cb.checked;
+      saveCheckState();
+    }
+
+    function saveCheckState() {
+      const state = {};
+      document.querySelectorAll('.checklist-card input[type="checkbox"]').forEach(cb => {
+        state[cb.id] = cb.checked;
+      });
+      localStorage.setItem('shanghai_check_state', JSON.stringify(state));
+    }
+
+    function loadCheckState() {
+      const saved = localStorage.getItem('shanghai_check_state');
+      if (saved) {
+        try {
+          const state = JSON.parse(saved);
+          Object.keys(state).forEach(id => {
+            const cb = document.getElementById(id);
+            if (cb) cb.checked = state[id];
+          });
+        } catch(e) {}
+      }
+    }
+
+    // Location Mapping with Exact Coordinates (GCJ-02) for Amap & Google Maps
+    const locationQueries = {
+      'pvg': { name: '上海浦東國際機場T2', amap: '浦東國際機場T2', lnglat: '121.81055,31.14488' },
+      'longyang': { name: '龍陽路地鐵站 上海', amap: '龍陽路地鐵站', lnglat: '121.55776,31.20371' },
+      'lingang': { name: '上海臨港冰雪明城酒店', amap: '臨港冰雪明城大酒店', lnglat: '121.93322,30.89312' },
+      'yuyuan': { name: '上海豫園華寶樓', amap: '豫園華寶樓', lnglat: '121.49216,31.22728' },
+      'bund': { name: '上海北外灘', amap: '北外灘', lnglat: '121.49752,31.24618' },
+      'manting': { name: '上海漫庭酒店迪士尼店', amap: '漫庭酒店(上海迪士尼店)', lnglat: '121.65751,31.13524' },
+      'disney': { name: '上海迪士尼樂園', amap: '上海迪士尼樂園', lnglat: '121.65796,31.14151' },
+      'wukang': { name: '上海武康大樓', amap: '武康大樓', lnglat: '121.44293,31.20087' }
+    };
+
+    // Transit Route Calculator Data & Function
+    const routeData = {
+      'pvg-longyang': { didiTime: '30 - 35 分鐘', didiCost: '約 ¥80 - 100 RMB (NT$ 360 - 450)', metroRoute: '磁懸浮列車 (僅需8分鐘) / 地鐵 2號線', metroTime: '磁懸浮 8分鐘 (車資 ¥50)' },
+      'pvg-lingang': { didiTime: '35 - 40 分鐘', didiCost: '約 ¥90 - 110 RMB (NT$ 400 - 490)', metroRoute: '地鐵 16號線 直達/打車最推薦', metroTime: '約 50 分鐘 (車資 ¥7)' },
+      'longyang-yuyuan': { didiTime: '20 - 25 分鐘', didiCost: '約 ¥35 - 45 RMB (NT$ 160 - 200)', metroRoute: '地鐵 2號線 ➔ 10號線 豫園站', metroTime: '約 18 分鐘 (車資 ¥4)' },
+      'longyang-lingang': { didiTime: '45 - 50 分鐘', didiCost: '約 ¥130 - 160 RMB (NT$ 580 - 710)', metroRoute: '地鐵 16號線 (直達/大站車最速)', metroTime: '約 35 分鐘 (車資 ¥9)' },
+      'yuyuan-bund': { didiTime: '10 - 15 分鐘', didiCost: '約 ¥18 - 25 RMB (NT$ 80 - 110)', metroRoute: '步行或搭乘地鐵 10號線 / 2元輪渡', metroTime: '約 15 分鐘' },
+      'lingang-manting': { didiTime: '40 - 45 分鐘', didiCost: '約 ¥110 - 130 RMB (NT$ 490 - 580)', metroRoute: '打網約車最方便快速', metroTime: '約 40 分鐘' },
+      'manting-disney': { didiTime: '10 - 15 分鐘', didiCost: '約 ¥20 - 30 RMB (NT$ 90 - 135)', metroRoute: '飯店免費接駁車直達樂園', metroTime: '約 12 分鐘 (免費)' },
+      'manting-wukang': { didiTime: '45 - 50 分鐘', didiCost: '約 ¥110 - 130 RMB (NT$ 490 - 580)', metroRoute: '地鐵 11號線 ➔ 10號線 交通大學站', metroTime: '約 55 分鐘' },
+      'manting-pvg': { didiTime: '30 - 35 分鐘', didiCost: '約 ¥85 - 105 RMB (NT$ 380 - 470)', metroRoute: '打網約車直達浦東機場 T2', metroTime: '約 30 分鐘' }
+    };
+
+    function calculateRoute() {
+      const start = document.getElementById('startLoc').value;
+      const end = document.getElementById('endLoc').value;
+      const key = `${start}-${end}`;
+      const keyReverse = `${end}-${start}`;
+
+      const res = routeData[key] || routeData[keyReverse] || {
+        didiTime: '約 35 - 50 分鐘',
+        didiCost: '約 ¥70 - 120 RMB (NT$ 310 - 530)',
+        metroRoute: '建議使用高德地圖 App 查詢實時方案',
+        metroTime: '約 45 - 60 分鐘'
+      };
+
+      document.getElementById('didiTime').innerText = res.didiTime;
+      document.getElementById('didiCost').innerText = res.didiCost;
+      document.getElementById('metroRoute').innerText = res.metroRoute;
+      document.getElementById('metroTime').innerText = res.metroTime;
+
+      // Update Amap & Google Maps Links with Exact Coordinates & Names
+      const startObj = locationQueries[start] || { name: start, amap: start, lnglat: '' };
+      const endObj = locationQueries[end] || { name: end, amap: end, lnglat: '' };
+      
+      // Amap Navigation URL with precise coordinates and name parameters so origin is NEVER replaced by current location
+      const amapUrl = `https://uri.amap.com/navigation?from=${startObj.lnglat},${encodeURIComponent(startObj.amap)}&to=${endObj.lnglat},${encodeURIComponent(endObj.amap)}&mode=bus&policy=1&src=travelapp`;
+      const gmapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(startObj.name)}&destination=${encodeURIComponent(endObj.name)}`;
+
+      document.getElementById('amapBtn').href = amapUrl;
+      document.getElementById('gmapsBtn').href = gmapsUrl;
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadCheckState();
+      calculateRoute();
+    });
+  </script>
+</body>
+</html>
