@@ -1451,7 +1451,6 @@
 
   <script>
     // Initial Default Itinerary Data
-    const 
     let day1SelectedOption = 1; // 1 or 2
 
     const day1Option1Data = [
@@ -1579,66 +1578,6 @@
 
     const initialItineraryData = {
       1: day1Option1Data,
-      1: [
-        {
-          id: "d1-1",
-          startTime: "13:20",
-          endTime: "14:30",
-          title: "班機抵達上海浦東國際機場 (PVG T2)",
-          tag: "機場入境",
-          desc: "搭乘春秋航空 9C8952 抵達浦東機場 T2，辦理入境通關、領取行李並完成台胞證查驗。",
-          minDuration: 50,
-          amapUrl: "https://uri.amap.com/marker?position=121.81055,31.14488&name=浦東國際機場T2",
-          amapBtnText: "高德地圖定位"
-        },
-        {
-          id: "d1-2",
-          startTime: "14:30",
-          endTime: "15:15",
-          title: "直奔交通樞紐「龍陽路站」寄存大行李",
-          tag: "順路寄存關鍵招",
-          desc: "從浦東機場搭乘 <strong>磁懸浮列車 (僅需 8 分鐘)</strong> 或 <strong>地鐵 2 號線 (約 35 分鐘)</strong> 直達交通樞紐 <strong>龍陽路站</strong>。<br>將大件行李寄存在龍陽路站自助寄存櫃（微信搜尋「途簡單」或「豐巢寄存包」），無需特地繞路先回臨港！",
-          tip: "💡 <strong>超神順路筆記：</strong>先寄行李在龍陽路站，去豫園與外灘完全不必背重行李，晚上取完行李直接在龍陽路搭乘 16 號線直達臨港飯店 Check-in，立省 1.5 小時來回車程！",
-          transitFromPrev: 30,
-          amapUrl: "https://uri.amap.com/navigation?from=121.81055,31.14488,浦東國際機場T2&to=121.55776,31.20371,龍陽路地鐵站&mode=bus",
-          amapBtnText: "高德地圖 (含磁懸浮/地鐵)"
-        },
-        {
-          id: "d1-3",
-          startTime: "15:30",
-          endTime: "18:30",
-          title: "輕裝前往「雲南南路」吃在地老字號 ＆ 買裕蓮茶樓伴手禮",
-          tag: "聽勸美食",
-          desc: "搭地鐵前往 <strong>雲南南路美食街</strong> 享用阿寶炸豬排、大壺春生煎等平價在地老字號，並至 <strong>裕蓮茶樓 (豫園華寶樓1F)</strong> 購買聽勸爆紅伴手禮 <strong>「蔥香牛軋萬德福」</strong>。",
-          copyAddr: "上海市黃浦區方浜中路265號華寶樓1樓裕蓮茶樓",
-          transitFromPrev: 15,
-          amapUrl: "https://uri.amap.com/navigation?from=121.55776,31.20371,龍陽路地鐵站&to=121.49216,31.22728,豫園華寶樓&mode=bus",
-          amapBtnText: "高德地圖地鐵路線"
-        },
-        {
-          id: "d1-4",
-          startTime: "18:30",
-          endTime: "20:45",
-          title: "聽勸神級夜景 3 連擊：北外灘 ➔ 2元浦江輪渡 ➔ 白玉蘭高空咖啡",
-          tag: "聽勸夜景首選",
-          desc: "💡 <strong>聽勸夜景神級黃金組合：</strong><br>1. <strong>北外灘親水平台：</strong>避開外灘擁擠人潮，拍出包含東方明珠與陸家嘴天際線的乾淨大片！<br>2. <strong>2元浦江輪渡：</strong>告別50元觀光隧道，站在船舷吹涼爽江風賞兩岸燈光秀。<br>3. <strong>白玉蘭廣場人民咖啡館：</strong>免費高空俯瞰魔都亮燈全景！",
-          transitFromPrev: 15,
-          amapUrl: "https://uri.amap.com/navigation?from=121.49216,31.22728,豫園&to=121.49752,31.24618,北外灘&mode=bus",
-          amapBtnText: "高德地圖夜景路線"
-        },
-        {
-          id: "d1-5",
-          startTime: "21:00",
-          endTime: "22:00",
-          title: "返回龍陽路站取行李 ➔ 地鐵16號線直達臨港入住",
-          tag: "順路回程",
-          desc: "搭地鐵返回龍陽路站取回寄存行李，轉乘 <strong>地鐵 16 號線 (大站車/直達車約 35 分鐘)</strong> 或打網約車直達「臨港冰雪明城飯店」Check-in 入住休息。",
-          copyAddr: "上海市浦東新區臨港新片區南匯新城環湖西二路888號臨港冰雪明城飯店",
-          transitFromPrev: 40,
-          amapUrl: "https://uri.amap.com/navigation?from=121.55776,31.20371,龍陽路地鐵站&to=121.93322,30.89312,臨港冰雪明城大酒店&mode=bus",
-          amapBtnText: "高德 16號線地鐵導航"
-        }
-      ],
       2: [
         {
           id: "d2-1",
@@ -1793,7 +1732,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260911_v7_day1options";
+    const DATA_VERSION = "20260911_v8_fix";
 
     // Load or initialize itinerary data
     function initItineraryData() {
