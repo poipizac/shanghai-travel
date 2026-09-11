@@ -1477,47 +1477,57 @@
       2: [
         {
           id: "d2-1",
-          startTime: "09:00",
-          endTime: "13:00",
-          title: "「耀雪冰雪世界」全球最大室內滑雪體驗",
-          tag: "極限冰雪",
-          desc: "飯店距離耀雪冰雪世界極近，現場提供專業雪服與雪具租借，暢玩世界級室內滑雪道與冰雪娛樂設施！",
+          startTime: "08:30",
+          endTime: "09:00",
+          title: "「臨港冰雪明城飯店」退房與寄存行李",
+          tag: "退房寄存",
+          desc: "早起辦理 Check-out，將大件行李寄存於臨港飯店前台，輕鬆出發前往耀雪冰雪世界。",
+          minDuration: 20
+        },
+        {
+          id: "d2-2",
+          startTime: "09:15",
+          endTime: "17:45",
+          title: "「耀雪冰雪世界」全日暢玩滑雪 ＆ 園區午餐",
+          tag: "極限冰雪全日",
+          desc: "飯店距離耀雪極近（車程約10分鐘）。現場提供專業雪服與雪具租借，全日暢玩世界級室內滑雪道與冰雪設施！中午於雪場內餐廳享用午餐。",
           tip: "💡 <strong>滑雪小貼士：</strong>請自備厚長襪與防寒手套，現場門票包含雪服與雪靴。",
-          minDuration: 120,
+          minDuration: 180,
+          transitFromPrev: 10,
           amapUrl: "https://uri.amap.com/navigation?from=121.93322,30.89312,臨港冰雪明城大酒店&to=121.92110,30.89850,耀雪冰雪世界&mode=car",
           amapBtnText: "高德打車/導航"
         },
         {
-          id: "d2-2",
-          startTime: "13:10",
-          endTime: "14:30",
-          title: "臨港周邊美食午餐 ＆ 飯店 Check-out",
-          tag: "退房午餐",
-          desc: "於臨港周邊享用午餐，返回臨港冰雪明城飯店辦理退房，並攜帶大件行李準備轉移至迪士尼周邊飯店。",
-          minDuration: 60,
-          transitFromPrev: 10
+          id: "d2-3",
+          startTime: "18:00",
+          endTime: "18:30",
+          title: "返回臨港飯店領取寄存行李",
+          tag: "取回行李",
+          desc: "滑雪結束後打車返回臨港冰雪明城飯店領取寄存大行李，準備離開臨港前往迪士尼周邊。",
+          transitFromPrev: 10,
+          minDuration: 20
         },
         {
-          id: "d2-3",
-          startTime: "17:30",
-          endTime: "18:30",
-          title: "轉移至「上海漫庭飯店（迪士尼店）」入住",
+          id: "d2-4",
+          startTime: "18:30",
+          endTime: "19:30",
+          title: "轉移至「上海漫庭飯店（迪士尼店）」Check-in",
           tag: "飯店換會",
           desc: "搭乘網約車直達 Day 2 & Day 3 入住飯店「上海漫庭飯店（迪士尼店）」（車程約 40 分鐘），辦理入住放行李。",
           copyAddr: "上海市浦東新區周浦鎮上海漫庭飯店迪士尼店",
-          transitFromPrev: 40,
+          transitFromPrev: 10,
           amapUrl: "https://uri.amap.com/navigation?from=121.93322,30.89312,臨港冰雪明城大酒店&to=121.65751,31.13524,漫庭酒店(上海迪士尼店)&mode=car",
           amapBtnText: "高德網約車/開車路線"
         },
         {
-          id: "d2-4",
+          id: "d2-5",
           startTime: "19:30",
-          endTime: "20:30",
+          endTime: "21:00",
           title: "飯店周邊在地美食晚餐 ＆ 早點休息儲備體力",
           tag: "休養生息",
           desc: "於漫庭飯店周邊（如周浦特色美食商圈）享用在地晚餐，返回飯店早點梳洗休息，為隔天 Day 3 迪士尼全日大挑戰儲備滿滿能量！",
           copyAddr: "上海市浦東新區周浦鎮上海漫庭飯店迪士尼店",
-          transitFromPrev: 15
+          transitFromPrev: 10
         }
       ],
       3: [
@@ -1618,7 +1628,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260911_v4_nightview";
+    const DATA_VERSION = "20260911_v5_day2ski";
 
     // Load or initialize itinerary data
     function initItineraryData() {
