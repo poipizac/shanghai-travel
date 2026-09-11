@@ -926,6 +926,49 @@
         grid-template-columns: 1fr;
       }
     }
+  
+    .fix-time-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border: none;
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .fix-time-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.5);
+    }
+
+    .fix-all-btn {
+      background: linear-gradient(135deg, #10b981, #0284c7);
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .fix-all-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+
   </style>
 </head>
 <body>
@@ -1027,6 +1070,9 @@
           </span>
         </div>
         <div class="feasibility-controls">
+          <button id="masterFixBtn" class="fix-all-btn" onclick="autoFixAllDayFeasibility(currentDay)" style="display: none;">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> 🪄 一鍵自動修正本日所有衝突
+          </button>
           <button class="copy-btn" onclick="generateShareUrl()" style="background: linear-gradient(135deg, var(--accent), #7c3aed); color: white; border: none; font-weight: 700;">
             <i class="fa-solid fa-share-nodes"></i> 🔗 複製專屬行程連結給朋友
           </button>
@@ -1572,10 +1618,9 @@
       return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
     }
 
-    // Feasibility Validator Engine
+    // Feasibility Validator & Auto-Fix Engine
     function validateDayFeasibility(dayNum) {
       const items = itineraryData[dayNum] || [];
-      const issues = [];
       let errorCount = 0;
       let warnCount = 0;
 
@@ -1587,11 +1632,17 @@
 
         item.feasiStatus = 'ok';
         item.feasiMsg = '';
+        item.suggestedStart = '';
+        item.suggestedEnd = '';
 
         // Check 1: Start time after End time
         if (duration <= 0) {
           item.feasiStatus = 'error';
           item.feasiMsg = '❌ 結束時間不能早於或等於開始時間！';
+          const sugS = item.startTime;
+          const sugE = minsToTime(startMins + (item.minDuration || 60));
+          item.suggestedStart = sugS;
+          item.suggestedEnd = sugE;
           errorCount++;
           continue;
         }
@@ -1600,26 +1651,35 @@
         if (item.minDuration && duration < item.minDuration) {
           item.feasiStatus = 'warn';
           item.feasiMsg = `⚠️ 此活動建議停留至少 ${item.minDuration} 分鐘，目前僅安排 ${duration} 分鐘，時間偏緊！`;
+          item.suggestedStart = item.startTime;
+          item.suggestedEnd = minsToTime(startMins + item.minDuration);
           warnCount++;
         }
 
-        // Check 3: Conflict / Overlap with previous item
+        // Check 3: Conflict / Overlap or Transit Buffer with previous item
         if (i > 0) {
           const prevItem = items[i - 1];
           const prevEndMins = timeToMins(prevItem.endTime);
+          const requiredTransit = item.transitFromPrev || 15;
+          const minReqStart = prevEndMins + requiredTransit;
 
           if (startMins < prevEndMins) {
             item.feasiStatus = 'error';
-            item.feasiMsg = `❌ 時間與上一行程「${prevItem.title.substring(0, 10)}...」出現時間重疊衝突！`;
+            item.feasiMsg = `❌ 時間與上一行程「${prevItem.title.substring(0, 10)}...」重疊衝突！`;
+            const actDur = Math.max(duration, item.minDuration || 45);
+            item.suggestedStart = minsToTime(minReqStart);
+            item.suggestedEnd = minsToTime(minReqStart + actDur);
             errorCount++;
             continue;
           }
 
-          // Check 4: Transit buffer gap
           const gap = startMins - prevEndMins;
           if (item.transitFromPrev && gap < item.transitFromPrev) {
             item.feasiStatus = 'warn';
             item.feasiMsg = `⚠️ 兩地預估交通需 ${item.transitFromPrev} 分鐘，目前轉乘時間僅留 ${gap} 分鐘，可能趕不及！`;
+            const actDur = Math.max(duration, item.minDuration || 45);
+            item.suggestedStart = minsToTime(minReqStart);
+            item.suggestedEnd = minsToTime(minReqStart + actDur);
             warnCount++;
           }
         }
@@ -1629,6 +1689,8 @@
           if (startMins < timeToMins("13:20")) {
             item.feasiStatus = 'error';
             item.feasiMsg = '❌ 航班預計 13:20 才降落浦東機場 T2，無法安排更早時間！';
+            item.suggestedStart = "13:20";
+            item.suggestedEnd = "14:30";
             errorCount++;
           }
         }
@@ -1638,6 +1700,8 @@
           if (endMins < timeToMins("18:00")) {
             item.feasiStatus = 'warn';
             item.feasiMsg = '⚠️ 長榮 BR721 於 20:05 起飛，強烈建議在 18:00 前抵達機場辦理登機。';
+            item.suggestedStart = "16:30";
+            item.suggestedEnd = "18:00";
             warnCount++;
           }
         }
@@ -1645,24 +1709,99 @@
           if (startMins < timeToMins("20:05")) {
             item.feasiStatus = 'error';
             item.feasiMsg = '❌ 長榮 BR721 班機起飛時間為 20:05，請勿提前或延後航班時間！';
+            item.suggestedStart = "20:05";
+            item.suggestedEnd = "22:00";
             errorCount++;
           }
         }
       }
 
-      // Update Overall Day Feasibility Badge
+      // Update Overall Day Feasibility Badge & Master Fix All Button
       const badge = document.getElementById('dayFeasibilityBadge');
-      if (!badge) return;
+      const masterFixBtn = document.getElementById('masterFixBtn');
 
-      if (errorCount > 0) {
-        badge.className = 'feasibility-badge badge-error';
-        badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ❌ 發現 ${errorCount} 處時間衝突（無法可行）`;
-      } else if (warnCount > 0) {
-        badge.className = 'feasibility-badge badge-warn';
-        badge.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ⚠️ 有 ${warnCount} 處轉乘時間緊湊（建議微調）`;
+      if (badge) {
+        if (errorCount > 0) {
+          badge.className = 'feasibility-badge badge-error';
+          badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ❌ 發現 ${errorCount} 處時間衝突（無法可行）`;
+        } else if (warnCount > 0) {
+          badge.className = 'feasibility-badge badge-warn';
+          badge.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ⚠️ 有 ${warnCount} 處轉乘時間緊湊（建議微調）`;
+        } else {
+          badge.className = 'feasibility-badge badge-ok';
+          badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> ✅ 時間充裕・行程安排合理`;
+        }
+      }
+
+      if (masterFixBtn) {
+        if (errorCount > 0 || warnCount > 0) {
+          masterFixBtn.style.display = 'inline-flex';
+        } else {
+          masterFixBtn.style.display = 'none';
+        }
+      }
+    }
+
+    // Auto-Fix single item
+    function autoFixItemTime(dayNum, itemId, newStart, newEnd) {
+      const item = itineraryData[dayNum].find(x => x.id === itemId);
+      if (item && newStart && newEnd) {
+        item.startTime = newStart;
+        item.endTime = newEnd;
+        saveItineraryData();
+        renderTimeline(dayNum);
+        showToast(`已一鍵修正時間為：${newStart} - ${newEnd}`);
+      }
+    }
+
+    // Auto-Fix all items for current day sequentially
+    function autoFixAllDayFeasibility(dayNum) {
+      const items = itineraryData[dayNum] || [];
+      let updated = false;
+
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        let startMins = timeToMins(item.startTime);
+        let endMins = timeToMins(item.endTime);
+        let duration = endMins - startMins;
+
+        if (duration <= 0) {
+          duration = item.minDuration || 60;
+          endMins = startMins + duration;
+          item.endTime = minsToTime(endMins);
+          updated = true;
+        }
+
+        if (item.minDuration && duration < item.minDuration) {
+          duration = item.minDuration;
+          endMins = startMins + duration;
+          item.endTime = minsToTime(endMins);
+          updated = true;
+        }
+
+        if (i > 0) {
+          const prevItem = items[i - 1];
+          const prevEndMins = timeToMins(prevItem.endTime);
+          const reqTransit = item.transitFromPrev || 15;
+          const minReqStart = prevEndMins + reqTransit;
+
+          if (startMins < minReqStart) {
+            const actDur = Math.max(duration, item.minDuration || 45);
+            startMins = minReqStart;
+            endMins = startMins + actDur;
+            item.startTime = minsToTime(startMins);
+            item.endTime = minsToTime(endMins);
+            updated = true;
+          }
+        }
+      }
+
+      if (updated) {
+        saveItineraryData();
+        renderTimeline(dayNum);
+        showToast(`已成功一鍵全自動修正 Day ${dayNum} 所有時間衝突！`);
       } else {
-        badge.className = 'feasibility-badge badge-ok';
-        badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> ✅ 時間充裕・行程安排合理`;
+        showToast(`當前 Day ${dayNum} 時間安排非常完美，無須修正！`);
       }
     }
 
@@ -1675,10 +1814,14 @@
       let html = '<div class="timeline">';
       items.forEach((item, index) => {
         let msgHtml = '';
-        if (item.feasiStatus === 'error') {
-          msgHtml = `<div class="feasibility-item-msg msg-error"><i class="fa-solid fa-circle-xmark"></i> ${item.feasiMsg}</div>`;
-        } else if (item.feasiStatus === 'warn') {
-          msgHtml = `<div class="feasibility-item-msg msg-warn"><i class="fa-solid fa-triangle-exclamation"></i> ${item.feasiMsg}</div>`;
+        if (item.feasiStatus === 'error' || item.feasiStatus === 'warn') {
+          const msgClass = item.feasiStatus === 'error' ? 'msg-error' : 'msg-warn';
+          const iconClass = item.feasiStatus === 'error' ? 'fa-circle-xmark' : 'fa-triangle-exclamation';
+          let fixBtnHtml = '';
+          if (item.suggestedStart && item.suggestedEnd) {
+            fixBtnHtml = `<br><button class="fix-time-btn" onclick="autoFixItemTime(${dayNum}, '${item.id}', '${item.suggestedStart}', '${item.suggestedEnd}')"><i class="fa-solid fa-wand-magic-sparkles"></i> 🪄 一鍵套用建議時間 (${item.suggestedStart} - ${item.suggestedEnd})</button>`;
+          }
+          msgHtml = `<div class="feasibility-item-msg ${msgClass}"><div><i class="fa-solid ${iconClass}"></i> ${item.feasiMsg}${fixBtnHtml}</div></div>`;
         }
 
         let tipHtml = item.tip ? `<div class="tip-box">${item.tip}</div>` : '';
