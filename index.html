@@ -2,6 +2,10 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
+    <!-- Cache Control Meta Tags to force fresh load -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>上海 4 天 3 夜夢幻行程 | 聽勸攻略 & 高德地圖地鐵導航</title>
   <!-- Google Fonts -->
@@ -1613,17 +1617,28 @@
     let currentDay = 1;
     let itineraryData = {};
 
+    // Version control for local data to automatically clear old cache when HTML updates
+    const DATA_VERSION = "20260911_v4_nightview";
+
     // Load or initialize itinerary data
     function initItineraryData() {
-      const saved = localStorage.getItem('shanghai_custom_itinerary');
-      if (saved) {
-        try {
-          itineraryData = JSON.parse(saved);
-        } catch(e) {
+      const savedVer = localStorage.getItem('shanghai_data_version');
+      if (savedVer !== DATA_VERSION) {
+        // Version updated! Clear old outdated local storage cache automatically
+        localStorage.removeItem('shanghai_custom_itinerary');
+        localStorage.setItem('shanghai_data_version', DATA_VERSION);
+        itineraryData = JSON.parse(JSON.stringify(initialItineraryData));
+      } else {
+        const saved = localStorage.getItem('shanghai_custom_itinerary');
+        if (saved) {
+          try {
+            itineraryData = JSON.parse(saved);
+          } catch(e) {
+            itineraryData = JSON.parse(JSON.stringify(initialItineraryData));
+          }
+        } else {
           itineraryData = JSON.parse(JSON.stringify(initialItineraryData));
         }
-      } else {
-        itineraryData = JSON.parse(JSON.stringify(initialItineraryData));
       }
     }
 
@@ -1937,11 +1952,13 @@
 
     // Reset Day to Default
     function resetCurrentDayItinerary() {
-      if (confirm(`確定要重置 Day ${currentDay} 的行程時間恢復預設值嗎？`)) {
+      if (confirm(`確定要重置 Day ${currentDay} 的行程時間恢復最新預設值嗎？`)) {
+        localStorage.removeItem('shanghai_custom_itinerary');
+        localStorage.setItem('shanghai_data_version', DATA_VERSION);
         itineraryData[currentDay] = JSON.parse(JSON.stringify(initialItineraryData[currentDay]));
         saveItineraryData();
         renderTimeline(currentDay);
-        showToast(`Day ${currentDay} 已重置為預設時間！`);
+        showToast(`Day ${currentDay} 已重置為最新預設時間與行程！`);
       }
     }
 
