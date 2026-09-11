@@ -1672,7 +1672,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260911_v13_compact_share_url";
+    const DATA_VERSION = "20260911_v14_all_days_share_sync";
 
     // Load or initialize itinerary data
     function initItineraryData() {
@@ -2246,20 +2246,41 @@
     // Generate Ultra-Compact Shareable URL with customized times encoded in URL hash (#p=)
     function generateShareUrl() {
       try {
+        // Sync any active time input fields currently open in DOM
+        document.querySelectorAll('.time-edit-inputs').forEach(group => {
+          if (group.style.display !== 'none') {
+            const id = group.id.replace('edit-inputs-', '');
+            const startInput = document.getElementById(`input-start-${id}`);
+            const endInput = document.getElementById(`input-end-${id}`);
+            if (startInput && endInput && startInput.value && endInput.value) {
+              [1, 2, 3, 4].forEach(day => {
+                const item = (itineraryData[day] || []).find(x => x.id === id);
+                if (item) {
+                  item.startTime = startInput.value;
+                  item.endTime = endInput.value;
+                }
+              });
+            }
+          }
+        });
+
+        saveItineraryData(); // Save current state to local storage
+
         const compactTimes = {};
-        Object.keys(itineraryData).forEach(day => {
+        [1, 2, 3, 4].forEach(day => {
           (itineraryData[day] || []).forEach(item => {
             if (item.id && item.startTime && item.endTime) {
               compactTimes[item.id] = [item.startTime, item.endTime];
             }
           });
         });
+
         const jsonStr = JSON.stringify(compactTimes);
         const b64 = btoa(unescape(encodeURIComponent(jsonStr)));
         const shareUrl = `${window.location.origin}${window.location.pathname}#p=${b64}`;
         
         navigator.clipboard.writeText(shareUrl).then(() => {
-          showToast("已成功複製精簡版專屬行程連結！傳給朋友開啟即可看到您的自訂時間");
+          showToast("已成功複製 4 天完整專屬行程連結！傳給朋友開啟即可同步所有時間");
         });
       } catch (e) {
         showToast("產生分享連結失敗，請重試");
@@ -2276,22 +2297,41 @@
           const sharedData = JSON.parse(jsonStr);
           
           if (sharedData) {
-            if (!sharedData[1]) {
-              // Compact map format {"d1-1":["13:20","15:30"], ...}
-              Object.keys(itineraryData).forEach(day => {
+            // Ensure full default structure for Days 1, 2, 3, 4 is initialized first
+            if (!itineraryData || !itineraryData[1] || !itineraryData[2] || !itineraryData[3] || !itineraryData[4]) {
+              itineraryData = JSON.parse(JSON.stringify(initialItineraryData));
+            }
+
+            if (sharedData[1] || sharedData["1"]) {
+              // Legacy full object format: safely merge per day and per item
+              [1, 2, 3, 4].forEach(day => {
+                const sArr = sharedData[day] || sharedData[String(day)];
+                if (Array.isArray(sArr) && sArr.length > 0) {
+                  sArr.forEach(sItem => {
+                    if (sItem && sItem.id) {
+                      const target = (itineraryData[day] || []).find(x => x.id === sItem.id);
+                      if (target) {
+                        target.startTime = sItem.startTime || target.startTime;
+                        target.endTime = sItem.endTime || target.endTime;
+                      }
+                    }
+                  });
+                }
+              });
+            } else {
+              // Compact map format {"d1-1":["13:20","15:30"], "d2-1":["08:30","09:00"], ...}
+              [1, 2, 3, 4].forEach(day => {
                 (itineraryData[day] || []).forEach(item => {
-                  if (item.id && sharedData[item.id]) {
+                  if (item.id && sharedData[item.id] && Array.isArray(sharedData[item.id])) {
                     item.startTime = sharedData[item.id][0];
                     item.endTime = sharedData[item.id][1];
                   }
                 });
               });
-            } else {
-              // Legacy full object format
-              itineraryData = sharedData;
             }
+
             saveItineraryData();
-            showToast("已成功載入朋友分享的專屬自訂行程時間！");
+            showToast("已成功載入朋友分享的 4 天專屬自訂行程時間！");
           }
         } catch(e) {
           console.error("Failed to parse shared plan data from URL hash", e);
