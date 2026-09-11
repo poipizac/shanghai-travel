@@ -1169,7 +1169,7 @@
                 <div style="font-size: 0.8rem; color: var(--text-muted);">上海市浦東新區臨港新片區南匯新城</div>
               </div>
               <div class="btn-group">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/marker?position=121.93322,30.89312&name=臨港冰雪明城大酒店" target="_blank">
+                <a class="copy-btn amap-btn" href="#" onclick="event.preventDefault(); openAmapMarker(\'臨港冰雪明城大酒店\', \'121.93322\', \'30.89312\');" target="_blank">
                   <i class="fa-solid fa-map-location-dot"></i> 高德
                 </a>
                 <button class="copy-btn" onclick="copyAddress('上海市浦東新區臨港新片區南匯新城環湖西二路888號臨港冰雪明城飯店')">
@@ -1184,7 +1184,7 @@
                 <div style="font-size: 0.8rem; color: var(--text-muted);">上海市浦東新區迪士尼周邊</div>
               </div>
               <div class="btn-group">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/marker?position=121.65751,31.13524&name=漫庭酒店(上海迪士尼店)" target="_blank">
+                <a class="copy-btn amap-btn" href="#" onclick="event.preventDefault(); openAmapMarker(\'漫庭酒店(上海迪士尼店)\', \'121.65751\', \'31.13524\');" target="_blank">
                   <i class="fa-solid fa-map-location-dot"></i> 高德
                 </a>
                 <button class="copy-btn" onclick="copyAddress('上海市浦東新區周浦鎮上海漫庭飯店迪士尼店')">
@@ -1199,7 +1199,7 @@
                 <div style="font-size: 0.8rem; color: var(--text-muted);">上海市黃浦區方浜中路265號1樓</div>
               </div>
               <div class="btn-group">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/marker?position=121.49216,31.22728&name=豫園華寶樓" target="_blank">
+                <a class="copy-btn amap-btn" href="#" onclick="event.preventDefault(); openAmapMarker(\'豫園華寶樓\', \'121.49216\', \'31.22728\');" target="_blank">
                   <i class="fa-solid fa-map-location-dot"></i> 高德
                 </a>
                 <button class="copy-btn" onclick="copyAddress('上海市黃浦區方浜中路265號華寶樓1樓裕蓮茶樓')">
@@ -1214,7 +1214,7 @@
                 <div style="font-size: 0.8rem; color: var(--text-muted);">上海市徐匯區淮海中路1850號</div>
               </div>
               <div class="btn-group">
-                <a class="copy-btn amap-btn" href="https://uri.amap.com/marker?position=121.44293,31.20087&name=武康大樓" target="_blank">
+                <a class="copy-btn amap-btn" href="#" onclick="event.preventDefault(); openAmapMarker(\'武康大樓\', \'121.44293\', \'31.20087\');" target="_blank">
                   <i class="fa-solid fa-map-location-dot"></i> 高德
                 </a>
                 <button class="copy-btn" onclick="copyAddress('上海市徐匯區淮海中路1850號武康大樓')">
@@ -1628,7 +1628,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260911_v5_day2ski";
+    const DATA_VERSION = "20260911_v6_amap_app";
 
     // Load or initialize itinerary data
     function initItineraryData() {
@@ -2031,14 +2031,15 @@
 
     // Location Mapping with Exact Coordinates (GCJ-02) for Amap & Google Maps
     const locationQueries = {
-      'pvg': { name: '上海浦東國際機場T2', amap: '浦東國際機場T2', lnglat: '121.81055,31.14488' },
-      'longyang': { name: '龍陽路地鐵站 上海', amap: '龍陽路地鐵站', lnglat: '121.55776,31.20371' },
-      'lingang': { name: '上海臨港冰雪明城酒店', amap: '臨港冰雪明城大酒店', lnglat: '121.93322,30.89312' },
-      'yuyuan': { name: '上海豫園華寶樓', amap: '豫園華寶樓', lnglat: '121.49216,31.22728' },
-      'bund': { name: '上海北外灘', amap: '北外灘', lnglat: '121.49752,31.24618' },
-      'manting': { name: '上海漫庭酒店迪士尼店', amap: '漫庭酒店(上海迪士尼店)', lnglat: '121.65751,31.13524' },
-      'disney': { name: '上海迪士尼樂園', amap: '上海迪士尼樂園', lnglat: '121.65796,31.14151' },
-      'wukang': { name: '上海武康大樓', amap: '武康大樓', lnglat: '121.44293,31.20087' }
+      'pvg': { name: '上海浦東國際機場T2', amap: '浦東國際機場T2', lnglat: '121.81055,31.14488', lng: '121.81055', lat: '31.14488' },
+      'longyang': { name: '龍陽路地鐵站 上海', amap: '龍陽路地鐵站', lnglat: '121.55776,31.20371', lng: '121.55776', lat: '31.20371' },
+      'lingang': { name: '上海臨港冰雪明城酒店', amap: '臨港冰雪明城大酒店', lnglat: '121.93322,30.89312', lng: '121.93322', lat: '30.89312' },
+      'yaoxue': { name: '耀雪冰雪世界', amap: '耀雪冰雪世界', lnglat: '121.92110,30.89850', lng: '121.92110', lat: '30.89850' },
+      'yuyuan': { name: '上海豫園華寶樓', amap: '豫園華寶樓', lnglat: '121.49216,31.22728', lng: '121.49216', lat: '31.22728' },
+      'bund': { name: '上海北外灘', amap: '北外灘', lnglat: '121.49752,31.24618', lng: '121.49752', lat: '31.24618' },
+      'manting': { name: '上海漫庭酒店迪士尼店', amap: '漫庭酒店(上海迪士尼店)', lnglat: '121.65751,31.13524', lng: '121.65751', lat: '31.13524' },
+      'disney': { name: '上海迪士尼樂園', amap: '上海迪士尼樂園', lnglat: '121.65796,31.14151', lng: '121.65796', lat: '31.14151' },
+      'wukang': { name: '上海武康大樓', amap: '武康大樓', lnglat: '121.44293,31.20087', lng: '121.44293', lat: '31.20087' }
     };
 
     // Transit Route Calculator Data & Function
@@ -2053,6 +2054,54 @@
       'manting-wukang': { didiTime: '45 - 50 分鐘', didiCost: '約 ¥110 - 130 RMB (NT$ 490 - 580)', metroRoute: '地鐵 11號線 ➔ 10號線 交通大學站', metroTime: '約 55 分鐘' },
       'manting-pvg': { didiTime: '30 - 35 分鐘', didiCost: '約 ¥85 - 105 RMB (NT$ 380 - 470)', metroRoute: '打網約車直達浦東機場 T2', metroTime: '約 30 分鐘' }
     };
+
+    
+    // Smart Wake-up Function for Native Amap App on Mobile Devices
+    function openAmapNav(startKey, endKey, mode = 'bus') {
+      const s = locationQueries[startKey] || { amap: startKey, lng: '', lat: '', lnglat: '' };
+      const e = locationQueries[endKey] || { amap: endKey, lng: '', lat: '', lnglat: '' };
+      openAmapRouteDirect(s, e, mode);
+    }
+
+    function openAmapRouteDirect(startObj, endObj, mode = 'bus') {
+      const tMode = (mode === 'car') ? '0' : '1'; // 1=transit/subway, 0=car/taxi
+      
+      // Amap Native App Deep Link URL (amapuri://)
+      const appUrl = `amapuri://route/plan/?sname=${encodeURIComponent(startObj.amap)}&slat=${startObj.lat || ''}&slon=${startObj.lng || ''}&dname=${encodeURIComponent(endObj.amap)}&dlat=${endObj.lat || ''}&dlon=${endObj.lng || ''}&dev=0&t=${tMode}`;
+      
+      // Web Fallback URL
+      const webUrl = `https://uri.amap.com/navigation?from=${startObj.lnglat},${encodeURIComponent(startObj.amap)}&to=${endObj.lnglat},${encodeURIComponent(endObj.amap)}&mode=${mode}&policy=1&src=travelapp`;
+
+      const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+        // Try waking up Native Amap App
+        window.location.href = appUrl;
+        
+        // Fallback to Web if App is not installed or blocked
+        setTimeout(() => {
+          window.open(webUrl, '_blank');
+        }, 1200);
+      } else {
+        // Desktop opens Web version directly
+        window.open(webUrl, '_blank');
+      }
+    }
+
+    function openAmapMarker(name, lng, lat) {
+      const appUrl = `amapuri://viewMap?sourceApplication=travelapp&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+      const webUrl = `https://uri.amap.com/marker?position=${lng},${lat}&name=${encodeURIComponent(name)}`;
+      
+      const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (isMobile) {
+        window.location.href = appUrl;
+        setTimeout(() => {
+          window.open(webUrl, '_blank');
+        }, 1200);
+      } else {
+        window.open(webUrl, '_blank');
+      }
+    }
 
     function calculateRoute() {
       const start = document.getElementById('startLoc').value;
@@ -2076,10 +2125,15 @@
       const startObj = locationQueries[start] || { name: start, amap: start, lnglat: '' };
       const endObj = locationQueries[end] || { name: end, amap: end, lnglat: '' };
       
-      const amapUrl = `https://uri.amap.com/navigation?from=${startObj.lnglat},${encodeURIComponent(startObj.amap)}&to=${endObj.lnglat},${encodeURIComponent(endObj.amap)}&mode=bus&policy=1&src=travelapp`;
       const gmapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(startObj.name)}&destination=${encodeURIComponent(endObj.name)}`;
 
-      document.getElementById('amapBtn').href = amapUrl;
+      const amapBtn = document.getElementById('amapBtn');
+      amapBtn.onclick = function(evt) {
+        evt.preventDefault();
+        openAmapRouteDirect(startObj, endObj, 'bus');
+      };
+      amapBtn.href = "#";
+
       document.getElementById('gmapsBtn').href = gmapsUrl;
     }
 
