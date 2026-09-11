@@ -1018,7 +1018,7 @@
         </div>
       </div>
 
-      <!-- Feasibility Diagnostic Banner -->
+      <!-- Feasibility Diagnostic Banner & Share Controls -->
       <div class="feasibility-banner">
         <div class="feasibility-status">
           <span style="font-weight: 700; font-size: 0.95rem; color: white;">⚡ 當前行程可行性判斷：</span>
@@ -1027,8 +1027,11 @@
           </span>
         </div>
         <div class="feasibility-controls">
+          <button class="copy-btn" onclick="generateShareUrl()" style="background: linear-gradient(135deg, var(--accent), #7c3aed); color: white; border: none; font-weight: 700;">
+            <i class="fa-solid fa-share-nodes"></i> 🔗 複製專屬行程連結給朋友
+          </button>
           <button class="reset-btn" onclick="resetCurrentDayItinerary()">
-            <i class="fa-solid fa-rotate-left"></i> 重置本頁時間
+            <i class="fa-solid fa-rotate-left"></i> 重置時間
           </button>
         </div>
       </div>
@@ -1884,7 +1887,42 @@
     }
 
     // Initialize on load
+    
+    // Generate Shareable URL with customized itinerary data encoded in URL hash
+    function generateShareUrl() {
+      try {
+        const jsonStr = JSON.stringify(itineraryData);
+        const encoded = encodeURIComponent(btoa(encodeURIComponent(jsonStr)));
+        const shareUrl = `${window.location.origin}${window.location.pathname}#plan=${encoded}`;
+        
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showToast("已成功複製專屬行程連結！傳給朋友開啟即可看到您的自訂時間");
+        });
+      } catch (e) {
+        showToast("產生分享連結失敗，請重試");
+      }
+    }
+
+    // Load customized itinerary from URL hash if present
+    function loadShareUrl() {
+      if (window.location.hash.startsWith('#plan=')) {
+        try {
+          const encoded = window.location.hash.substring(6);
+          const jsonStr = decodeURIComponent(atob(decodeURIComponent(encoded)));
+          const sharedData = JSON.parse(jsonStr);
+          if (sharedData && sharedData[1]) {
+            itineraryData = sharedData;
+            saveItineraryData();
+            showToast("已成功載入朋友分享的專屬自訂行程！");
+          }
+        } catch(e) {
+          console.error("Failed to parse shared plan data from URL hash", e);
+        }
+      }
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
+      loadShareUrl();
       initItineraryData();
       renderTimeline(currentDay);
       loadCheckState();
