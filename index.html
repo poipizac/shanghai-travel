@@ -1672,7 +1672,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260911_v11_gongyan_day4";
+    const DATA_VERSION = "20260911_v12_airport_validation_fix";
 
     // Load or initialize itinerary data
     function initItineraryData() {
@@ -1791,23 +1791,20 @@
           }
         }
 
-        // Anchor Rule 2: Day 4 Airport Departure Safety Check
-        if (dayNum === 4 && item.id === 'd4-4') {
-          if (endMins < timeToMins("18:00")) {
+        // Anchor Rule 2: Day 4 Airport Departure Safety Check (Check-in at least 2h prior to flight 20:05)
+        if (dayNum === 4 && item.title.includes("辦理登機")) {
+          if (endMins > timeToMins("18:05")) {
             item.feasiStatus = 'warn';
-            item.feasiMsg = '⚠️ 長榮 BR721 於 20:05 起飛，強烈建議在 18:00 前抵達機場辦理登機。';
+            item.feasiMsg = '⚠️ 長榮 BR721 於 20:05 起飛，國際航班強烈建議在 18:00 前 (起飛前 2 小時) 抵達機場辦理登機。';
             item.suggestedStart = "16:30";
             item.suggestedEnd = "18:00";
             warnCount++;
           }
         }
-        if (dayNum === 4 && item.id === 'd4-5') {
-          if (startMins < timeToMins("20:05")) {
-            item.feasiStatus = 'error';
-            item.feasiMsg = '❌ 長榮 BR721 班機起飛時間為 20:05，請勿提前或延後航班時間！';
-            item.suggestedStart = "20:05";
-            item.suggestedEnd = "22:00";
-            errorCount++;
+        if (dayNum === 4 && item.title.includes("BR721")) {
+          if (startMins !== timeToMins("20:05")) {
+            item.feasiStatus = 'warn';
+            item.feasiMsg = '💡 長榮 BR721 班機預定起飛時間為 20:05。';
           }
         }
       }
