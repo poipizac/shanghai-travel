@@ -973,6 +973,44 @@
       box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
     }
 
+  
+    .option-switcher-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .plan-option-btn {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .plan-option-btn:hover {
+      border-color: var(--primary);
+      color: white;
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .plan-option-btn.active {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(168, 85, 247, 0.25));
+      border-color: var(--primary);
+      color: white;
+      box-shadow: 0 0 15px var(--primary-glow);
+    }
+
   </style>
 </head>
 <body>
@@ -1413,7 +1451,134 @@
 
   <script>
     // Initial Default Itinerary Data
+    const 
+    let day1SelectedOption = 1; // 1 or 2
+
+    const day1Option1Data = [
+      {
+        id: "d1-1",
+        startTime: "13:20",
+        endTime: "14:30",
+        title: "班機抵達上海浦東國際機場 (PVG T2)",
+        tag: "機場入境",
+        desc: "搭乘春秋航空 9C8952 抵達浦東機場 T2，辦理入境通關、領取行李並完成台胞證查驗。",
+        minDuration: 50,
+        amapUrl: "https://uri.amap.com/marker?position=121.81055,31.14488&name=浦東國際機場T2",
+        amapBtnText: "高德地圖定位"
+      },
+      {
+        id: "d1-2",
+        startTime: "14:30",
+        endTime: "15:15",
+        title: "直奔交通樞紐「龍陽路站」寄存大行李",
+        tag: "順路寄存關鍵招",
+        desc: "從浦東機場搭乘 <strong>磁懸浮列車 (僅需 8 分鐘)</strong> 或 <strong>地鐵 2 號線 (約 35 分鐘)</strong> 直達交通樞紐 <strong>龍陽路站</strong>。<br>將大件行李寄存在龍陽路站自助寄存櫃（微信搜尋「途簡單」或「豐巢寄存包」），無需特地繞路先回臨港！",
+        tip: "💡 <strong>超神順路筆記：</strong>先寄行李在龍陽路站，逛街賞夜景完全不必背重行李！",
+        transitFromPrev: 30,
+        amapUrl: "https://uri.amap.com/navigation?from=121.81055,31.14488,浦東國際機場T2&to=121.55776,31.20371,龍陽路地鐵站&mode=bus",
+        amapBtnText: "高德地圖 (含磁懸浮/地鐵)"
+      },
+      {
+        id: "d1-3",
+        startTime: "16:00",
+        endTime: "18:30",
+        title: "【老字號散步線】雲南南路美食街 ➔ 步行漫遊 ➔ 豫園華寶樓",
+        tag: "聽勸美食 & 伴手禮",
+        desc: "🚶 <strong>全步行路線（約 850 公尺，步行 10-12 分鐘）：</strong><br>1. <strong>雲南南路：</strong>品嚐阿寶炸豬排、小紹興 / 大壺春生煎。<br>2. 沿金陵東路漫步至豫園，沿途拍攝海派騎樓街景。<br>3. <strong>豫園華寶樓 1F：</strong>採買裕蓮茶樓「蔥香牛軋萬德福」（建議先買防售罄）。<br>4. 傍晚 18:00 前後：欣賞豫園仿古建築華燈初上！",
+        tip: "💡 <strong>備註：</strong>若行李寄在豫園站，此時可順道取行李。",
+        copyAddr: "上海市黃浦區方浜中路265號華寶樓1樓裕蓮茶樓",
+        transitFromPrev: 20,
+        amapUrl: "https://uri.amap.com/navigation?from=121.55776,31.20371,龍陽路地鐵站&to=121.49216,31.22728,豫園華寶樓&mode=bus",
+        amapBtnText: "高德地圖地鐵路線"
+      },
+      {
+        id: "d1-4",
+        startTime: "18:45",
+        endTime: "20:45",
+        title: "【北外灘雙重奏】白玉蘭廣場人民咖啡館 ➔ 北外灘巨蛋親水平台",
+        tag: "聽勸高空夜景 (最推薦)",
+        desc: "🚖 <strong>交通：豫園打車直達白玉蘭廣場 (約3.5公里，車程12-15分鐘)</strong><br>1. <strong>白玉蘭廣場人民咖啡館：</strong>免費高空視角，俯瞰黃浦江與外灘、陸家嘴雙岸全景。<br>2. <strong>北外灘濱江親水平台：</strong>走下樓站在銀色巨蛋裝置旁，避開外灘人潮，與對岸「東方明珠＋陸家嘴三件套」拍乾淨大片！",
+        tip: "💡 <strong>備註：</strong>此處人流比外灘正核心少 70%，視野與拍攝角度極佳！",
+        transitFromPrev: 15,
+        amapUrl: "https://uri.amap.com/navigation?from=121.49216,31.22728,豫園&to=121.49752,31.24618,北外灘&mode=car",
+        amapBtnText: "高德打車路線"
+      },
+      {
+        id: "d1-5",
+        startTime: "20:45",
+        endTime: "22:00",
+        title: "【直奔臨港】北外灘打車 ➔ 臨港冰雪明城飯店入住",
+        tag: "啟程入住",
+        desc: "🚖 <strong>交通：滴滴打車 (走高速約 65 公里，約 60-70 分鐘，車資約 200 RMB)</strong><br>夜間高速一路暢通不塞車，車上休息直接睡到飯店辦理 Check-in 入住，為隔天耀雪滑雪蓄積體力！",
+        copyAddr: "上海市浦東新區臨港新片區南匯新城環湖西二路888號臨港冰雪明城飯店",
+        transitFromPrev: 60,
+        amapUrl: "https://uri.amap.com/navigation?from=121.49752,31.24618,北外灘&to=121.93322,30.89312,臨港冰雪明城大酒店&mode=car",
+        amapBtnText: "高德打車/高速導航"
+      }
+    ];
+
+    const day1Option2Data = [
+      {
+        id: "d1-1",
+        startTime: "13:20",
+        endTime: "14:30",
+        title: "班機抵達上海浦東國際機場 (PVG T2)",
+        tag: "機場入境",
+        desc: "搭乘春秋航空 9C8952 抵達浦東機場 T2，辦理入境通關、領取行李並完成台胞證查驗。",
+        minDuration: 50,
+        amapUrl: "https://uri.amap.com/marker?position=121.81055,31.14488&name=浦東國際機場T2",
+        amapBtnText: "高德地圖定位"
+      },
+      {
+        id: "d1-2",
+        startTime: "14:30",
+        endTime: "15:15",
+        title: "直奔交通樞紐「龍陽路站」寄存大行李",
+        tag: "順路寄存關鍵招",
+        desc: "從浦東機場搭乘 <strong>磁懸浮列車 (僅需 8 分鐘)</strong> 或 <strong>地鐵 2 號線 (約 35 分鐘)</strong> 直達交通樞紐 <strong>龍陽路站</strong>。<br>將大件行李寄存在龍陽路站自助寄存櫃，無需特地繞路先回臨港！",
+        transitFromPrev: 30,
+        amapUrl: "https://uri.amap.com/navigation?from=121.81055,31.14488,浦東國際機場T2&to=121.55776,31.20371,龍陽路地鐵站&mode=bus",
+        amapBtnText: "高德地圖 (含磁懸浮/地鐵)"
+      },
+      {
+        id: "d1-3",
+        startTime: "16:00",
+        endTime: "18:30",
+        title: "【老城廂逛吃】雲南南路 ➔ 豫園華寶樓 ➔ 拍豫園夜景 ➔ 取行李",
+        tag: "聽勸美食 & 豫園老街",
+        desc: "🚶 <strong>全步行 10 分鐘：</strong>品嚐雲南南路老字號（阿寶炸豬排/大壺春）、至華寶樓1F採買裕蓮茶樓「蔥香牛軋萬德福」，並拍攝豫園古風燈火。",
+        copyAddr: "上海市黃浦區方浜中路265號華寶樓1樓裕蓮茶樓",
+        transitFromPrev: 20,
+        amapUrl: "https://uri.amap.com/navigation?from=121.55776,31.20371,龍陽路地鐵站&to=121.49216,31.22728,豫園華寶樓&mode=bus",
+        amapBtnText: "高德地圖路線"
+      },
+      {
+        id: "d1-4",
+        startTime: "18:45",
+        endTime: "20:30",
+        title: "【水陸雙重視角】金陵東路渡口 ➔ 2元輪渡 ➔ 浦東東昌路 ➔ 陸家嘴三件套",
+        tag: "2元輪渡夜景 (順向往臨港)",
+        desc: "🚶+🚢 <strong>交通：步行 10 分鐘至「金陵東路渡口」</strong><br>1. 刷支付寶 2 元搭乘「浦江輪渡」至浦東「東昌路渡口」（在江上甲板吹風賞兩岸燈光秀）。<br>2. 出渡口後即為浦東濱江，漫步仰望陸家嘴摩天大樓群（上海中心、環球金融中心、金茂大廈）。<br>💡 <strong>俯瞰替代：</strong>若想俯瞰全景，可直接登上「上海中心大廈 118F 上海之巔」。",
+        transitFromPrev: 15,
+        amapUrl: "https://uri.amap.com/navigation?from=121.49216,31.22728,豫園&to=121.50500,31.23800,陸家嘴&mode=bus",
+        amapBtnText: "高德輪渡/陸家嘴路線"
+      },
+      {
+        id: "d1-5",
+        startTime: "20:30",
+        endTime: "21:40",
+        title: "【浦東出發】陸家嘴打車 ➔ 臨港冰雪明城飯店",
+        tag: "順路往南",
+        desc: "🚖 <strong>交通：直接從浦東陸家嘴打車去臨港</strong><br>因人在浦東側，無需經過跨江隧道，一路向南直達臨港飯店，更順路快捷！",
+        copyAddr: "上海市浦東新區臨港新片區南匯新城環湖西二路888號臨港冰雪明城飯店",
+        transitFromPrev: 50,
+        amapUrl: "https://uri.amap.com/navigation?from=121.50500,31.23800,陸家嘴&to=121.93322,30.89312,臨港冰雪明城大酒店&mode=car",
+        amapBtnText: "高德打車路線"
+      }
+    ];
+
     const initialItineraryData = {
+      1: day1Option1Data,
       1: [
         {
           id: "d1-1",
@@ -1628,7 +1793,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260911_v6_amap_app";
+    const DATA_VERSION = "20260911_v7_day1options";
 
     // Load or initialize itinerary data
     function initItineraryData() {
@@ -1857,13 +2022,41 @@
       }
     }
 
+    // Switch Day 1 Option (Plan 1 or Plan 2)
+    function switchDay1PlanOption(optNum) {
+      day1SelectedOption = optNum;
+      if (optNum === 1) {
+        itineraryData[1] = JSON.parse(JSON.stringify(day1Option1Data));
+      } else {
+        itineraryData[1] = JSON.parse(JSON.stringify(day1Option2Data));
+      }
+      saveItineraryData();
+      renderTimeline(1);
+    }
+
     // Render Timeline Items for Active Day
     function renderTimeline(dayNum) {
       validateDayFeasibility(dayNum);
       const container = document.getElementById('timelineContainer');
       const items = itineraryData[dayNum] || [];
 
-      let html = '<div class="timeline">';
+      let html = '';
+      if (dayNum === 1) {
+        const opt1Active = day1SelectedOption === 1 ? 'active' : '';
+        const opt2Active = day1SelectedOption === 2 ? 'active' : '';
+        html += `
+          <div class="option-switcher-bar">
+            <button class="plan-option-btn ${opt1Active}" onclick="switchDay1PlanOption(1)">
+              <i class="fa-solid fa-star" style="color: #fbbf24;"></i> 方案一：【浦西純享版】白玉蘭高空＋北外灘無人夜景 (最推薦)
+            </button>
+            <button class="plan-option-btn ${opt2Active}" onclick="switchDay1PlanOption(2)">
+              <i class="fa-solid fa-ship" style="color: #38bdf8;"></i> 方案二：【江陸聯動版】2元輪渡＋陸家嘴夜景 (順向往臨港)
+            </button>
+          </div>
+        `;
+      }
+
+      html += '<div class="timeline">';
       items.forEach((item, index) => {
         let msgHtml = '';
         if (item.feasiStatus === 'error' || item.feasiStatus === 'warn') {
