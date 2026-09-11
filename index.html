@@ -1656,7 +1656,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260911_v9_exact_image";
+    const DATA_VERSION = "20260911_v10_amap_deeplink_fix";
 
     // Load or initialize itinerary data
     function initItineraryData() {
@@ -1920,7 +1920,7 @@
         
         let btnsHtml = '<div class="action-btn-row">';
         if (item.amapUrl) {
-          btnsHtml += `<a class="copy-btn amap-btn" href="${item.amapUrl}" target="_blank"><i class="fa-solid fa-map-location-dot"></i> ${item.amapBtnText || '高德地圖'}</a>`;
+          btnsHtml += `<a class="copy-btn amap-btn" href="#" onclick="event.preventDefault(); openAmapSmartUrl('${item.amapUrl}');"><i class="fa-solid fa-map-location-dot"></i> ${item.amapBtnText || '高德地圖'}</a>`;
         }
         if (item.copyAddr) {
           btnsHtml += `<button class="copy-btn" onclick="copyAddress('${item.copyAddr}')"><i class="fa-regular fa-copy"></i> 複製地址</button>`;
@@ -2096,7 +2096,85 @@
     };
 
     
-    // Smart Wake-up Function for Native Amap App on Mobile Devices
+    // Smart Wake-up Function for Native Amap App (高德地圖 APP) on Mobile Devices
+    function openAmapSmartUrl(webUrl) {
+      if (!webUrl) return;
+
+      const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const isAndroid = /Android/i.test(navigator.userAgent);
+
+      if (!isMobile) {
+        window.open(webUrl, '_blank');
+        return;
+      }
+
+      let appUrl = '';
+      let intentUrl = '';
+
+      try {
+        if (webUrl.includes('/navigation')) {
+          const u = new URL(webUrl);
+          const fromParam = u.searchParams.get('from') || '';
+          const toParam = u.searchParams.get('to') || '';
+          const modeParam = u.searchParams.get('mode') || 'bus';
+
+          const fromParts = fromParam.split(',');
+          const toParts = toParam.split(',');
+
+          const slon = fromParts[0] || '';
+          const slat = fromParts[1] || '';
+          const sname = fromParts[2] || '起點';
+
+          const dlon = toParts[0] || '';
+          const dlat = toParts[1] || '';
+          const dname = toParts[2] || '終點';
+
+          const tMode = (modeParam === 'car') ? '0' : (modeParam === 'walk' ? '2' : '1');
+
+          appUrl = `amapuri://route/plan/?sname=${encodeURIComponent(sname)}&slat=${slat}&slon=${slon}&dname=${encodeURIComponent(dname)}&dlat=${dlat}&dlon=${dlon}&dev=0&t=${tMode}`;
+          intentUrl = `intent://route/plan/?sname=${encodeURIComponent(sname)}&slat=${slat}&slon=${slon}&dname=${encodeURIComponent(dname)}&dlat=${dlat}&dlon=${dlon}&dev=0&t=${tMode}#Intent;scheme=amapuri;package=com.autonavi.minimap;end`;
+        } else if (webUrl.includes('/marker')) {
+          const u = new URL(webUrl);
+          const posParam = u.searchParams.get('position') || '';
+          const nameParam = u.searchParams.get('name') || '地點';
+          const posParts = posParam.split(',');
+          const lon = posParts[0] || '';
+          const lat = posParts[1] || '';
+
+          appUrl = `amapuri://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(nameParam)}&lat=${lat}&lon=${lon}&dev=0`;
+          intentUrl = `intent://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(nameParam)}&lat=${lat}&lon=${lon}&dev=0#Intent;scheme=amapuri;package=com.autonavi.minimap;end`;
+        }
+      } catch (e) {
+        console.error("Error parsing Amap URL for deep link", e);
+      }
+
+      if (!appUrl) {
+        window.open(webUrl, '_blank');
+        return;
+      }
+
+      let pageLeft = false;
+      const handleVisibilityChange = () => {
+        if (document.hidden || document.webkitHidden) {
+          pageLeft = true;
+        }
+      };
+      document.addEventListener('visibilitychange', handleVisibilityChange, { once: true });
+
+      if (isAndroid && intentUrl) {
+        window.location.href = intentUrl;
+      } else {
+        window.location.href = appUrl;
+      }
+
+      // Fallback timer: only open web page after 2.5s if user hasn't left to native app
+      setTimeout(() => {
+        if (!pageLeft && !document.hidden) {
+          window.open(webUrl, '_blank');
+        }
+      }, 2500);
+    }
+
     function openAmapNav(startKey, endKey, mode = 'bus') {
       const s = locationQueries[startKey] || { amap: startKey, lng: '', lat: '', lnglat: '' };
       const e = locationQueries[endKey] || { amap: endKey, lng: '', lat: '', lnglat: '' };
@@ -2104,43 +2182,13 @@
     }
 
     function openAmapRouteDirect(startObj, endObj, mode = 'bus') {
-      const tMode = (mode === 'car') ? '0' : '1'; // 1=transit/subway, 0=car/taxi
-      
-      // Amap Native App Deep Link URL (amapuri://)
-      const appUrl = `amapuri://route/plan/?sname=${encodeURIComponent(startObj.amap)}&slat=${startObj.lat || ''}&slon=${startObj.lng || ''}&dname=${encodeURIComponent(endObj.amap)}&dlat=${endObj.lat || ''}&dlon=${endObj.lng || ''}&dev=0&t=${tMode}`;
-      
-      // Web Fallback URL
       const webUrl = `https://uri.amap.com/navigation?from=${startObj.lnglat},${encodeURIComponent(startObj.amap)}&to=${endObj.lnglat},${encodeURIComponent(endObj.amap)}&mode=${mode}&policy=1&src=travelapp`;
-
-      const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      
-      if (isMobile) {
-        // Try waking up Native Amap App
-        window.location.href = appUrl;
-        
-        // Fallback to Web if App is not installed or blocked
-        setTimeout(() => {
-          window.open(webUrl, '_blank');
-        }, 1200);
-      } else {
-        // Desktop opens Web version directly
-        window.open(webUrl, '_blank');
-      }
+      openAmapSmartUrl(webUrl);
     }
 
     function openAmapMarker(name, lng, lat) {
-      const appUrl = `amapuri://viewMap?sourceApplication=travelapp&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
       const webUrl = `https://uri.amap.com/marker?position=${lng},${lat}&name=${encodeURIComponent(name)}`;
-      
-      const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      if (isMobile) {
-        window.location.href = appUrl;
-        setTimeout(() => {
-          window.open(webUrl, '_blank');
-        }, 1200);
-      } else {
-        window.open(webUrl, '_blank');
-      }
+      openAmapSmartUrl(webUrl);
     }
 
     function calculateRoute() {
