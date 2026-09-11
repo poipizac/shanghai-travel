@@ -1672,7 +1672,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260911_v12_airport_validation_fix";
+    const DATA_VERSION = "20260911_v13_compact_share_url";
 
     // Load or initialize itinerary data
     function initItineraryData() {
@@ -2243,15 +2243,23 @@
 
     // Initialize on load
     
-    // Generate Shareable URL with customized itinerary data encoded in URL hash
+    // Generate Ultra-Compact Shareable URL with customized times encoded in URL hash (#p=)
     function generateShareUrl() {
       try {
-        const jsonStr = JSON.stringify(itineraryData);
-        const encoded = encodeURIComponent(btoa(encodeURIComponent(jsonStr)));
-        const shareUrl = `${window.location.origin}${window.location.pathname}#plan=${encoded}`;
+        const compactTimes = {};
+        Object.keys(itineraryData).forEach(day => {
+          (itineraryData[day] || []).forEach(item => {
+            if (item.id && item.startTime && item.endTime) {
+              compactTimes[item.id] = [item.startTime, item.endTime];
+            }
+          });
+        });
+        const jsonStr = JSON.stringify(compactTimes);
+        const b64 = btoa(unescape(encodeURIComponent(jsonStr)));
+        const shareUrl = `${window.location.origin}${window.location.pathname}#p=${b64}`;
         
         navigator.clipboard.writeText(shareUrl).then(() => {
-          showToast("已成功複製專屬行程連結！傳給朋友開啟即可看到您的自訂時間");
+          showToast("已成功複製精簡版專屬行程連結！傳給朋友開啟即可看到您的自訂時間");
         });
       } catch (e) {
         showToast("產生分享連結失敗，請重試");
@@ -2260,15 +2268,30 @@
 
     // Load customized itinerary from URL hash if present
     function loadShareUrl() {
-      if (window.location.hash.startsWith('#plan=')) {
+      const hash = window.location.hash;
+      if (hash.startsWith('#p=') || hash.startsWith('#plan=')) {
         try {
-          const encoded = window.location.hash.substring(6);
-          const jsonStr = decodeURIComponent(atob(decodeURIComponent(encoded)));
+          const raw = hash.startsWith('#p=') ? hash.substring(3) : hash.substring(6);
+          const jsonStr = decodeURIComponent(escape(atob(raw)));
           const sharedData = JSON.parse(jsonStr);
-          if (sharedData && sharedData[1]) {
-            itineraryData = sharedData;
+          
+          if (sharedData) {
+            if (!sharedData[1]) {
+              // Compact map format {"d1-1":["13:20","15:30"], ...}
+              Object.keys(itineraryData).forEach(day => {
+                (itineraryData[day] || []).forEach(item => {
+                  if (item.id && sharedData[item.id]) {
+                    item.startTime = sharedData[item.id][0];
+                    item.endTime = sharedData[item.id][1];
+                  }
+                });
+              });
+            } else {
+              // Legacy full object format
+              itineraryData = sharedData;
+            }
             saveItineraryData();
-            showToast("已成功載入朋友分享的專屬自訂行程！");
+            showToast("已成功載入朋友分享的專屬自訂行程時間！");
           }
         } catch(e) {
           console.error("Failed to parse shared plan data from URL hash", e);
@@ -2277,8 +2300,8 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      loadShareUrl();
       initItineraryData();
+      loadShareUrl(); // loadShareUrl MUST run after initItineraryData so shared URL hash overrides default/stored itinerary!
       renderTimeline(currentDay);
       loadCheckState();
       calculateRoute();
