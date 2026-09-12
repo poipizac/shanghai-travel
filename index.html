@@ -1148,6 +1148,7 @@
               <option value="yuyuan">豫園 / 華寶樓 (裕蓮茶樓)</option>
               <option value="manting">上海漫庭飯店 (國際旅遊度假區店)</option>
               <option value="disney">上海迪士尼樂園</option>
+              <option value="gongyan">上海宮宴 (靜安店)</option>
               <option value="wukang">武康路 / 武康大樓</option>
             </select>
           </div>
@@ -1161,6 +1162,7 @@
               <option value="bund">北外灘 / 外灘</option>
               <option value="manting">上海漫庭飯店 (國際旅遊度假區店)</option>
               <option value="disney">上海迪士尼樂園</option>
+              <option value="gongyan">上海宮宴 (靜安店)</option>
               <option value="wukang">武康路 / 武康大樓</option>
               <option value="pvg">浦東國際機場 T2</option>
             </select>
@@ -1687,7 +1689,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260912_v30_wukang_poi_accurate";
+    const DATA_VERSION = "20260912_v31_calc_gongyan_added";
 
     // Load or initialize itinerary data
     function initItineraryData() {
@@ -2124,6 +2126,11 @@
       'manting-gongyan': { didiTime: '40 - 45 分鐘', didiCost: '約 ¥100 - 125 RMB (NT$ 440 - 550)', metroRoute: '打網約車直達靜安宮宴最順暢', metroTime: '約 40 - 45 分鐘' },
       'gongyan-wukang': { didiTime: '10 - 15 分鐘', didiCost: '約 ¥16 - 22 RMB (NT$ 70 - 100)', metroRoute: '打車僅約 3.5 公里 / 地鐵 7 號線至常熟路', metroTime: '約 12 分鐘' },
       'gongyan-pvg': { didiTime: '45 - 50 分鐘', didiCost: '約 ¥120 - 145 RMB (NT$ 530 - 640)', metroRoute: '靜安寺站搭地鐵 2 號線直達 或 打網約車直達 T2', metroTime: '約 50 分鐘' },
+      'pvg-gongyan': { didiTime: '45 - 50 分鐘', didiCost: '約 ¥120 - 145 RMB (NT$ 530 - 640)', metroRoute: '地鐵 2號線直達靜安寺站', metroTime: '約 55 分鐘 (車資 ¥8)' },
+      'longyang-gongyan': { didiTime: '25 - 30 分鐘', didiCost: '約 ¥45 - 55 RMB (NT$ 200 - 245)', metroRoute: '地鐵 2號線直達靜安寺站', metroTime: '約 22 分鐘 (車資 ¥4)' },
+      'yuyuan-gongyan': { didiTime: '15 - 20 分鐘', didiCost: '約 ¥22 - 30 RMB (NT$ 100 - 135)', metroRoute: '地鐵 10號線 ➔ 2號線 靜安寺站', metroTime: '約 18 分鐘 (車資 ¥4)' },
+      'bund-gongyan': { didiTime: '15 - 20 分鐘', didiCost: '約 ¥25 - 32 RMB (NT$ 110 - 140)', metroRoute: '地鐵 2號線 / 12號線直達靜安寺', metroTime: '約 15 分鐘 (車資 ¥3)' },
+      'disney-gongyan': { didiTime: '35 - 40 分鐘', didiCost: '約 ¥95 - 120 RMB (NT$ 420 - 530)', metroRoute: '地鐵 11號線 ➔ 2號線 靜安寺站', metroTime: '約 45 分鐘 (車資 ¥6)' },
       'wukang-pvg': { didiTime: '45 - 50 分鐘', didiCost: '約 ¥120 - 145 RMB (NT$ 530 - 640)', metroRoute: '打網約車直達浦東機場 T2 最省心', metroTime: '約 50 分鐘' },
       'manting-pvg': { didiTime: '30 - 35 分鐘', didiCost: '約 ¥85 - 105 RMB (NT$ 380 - 470)', metroRoute: '打網約車直達浦東機場 T2', metroTime: '約 30 分鐘' }
     };
