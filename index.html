@@ -1672,7 +1672,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260912_v25_yulian_poi_exact";
+    const DATA_VERSION = "20260912_v26_fullscreen_map";
 
     // Load or initialize itinerary data
     function initItineraryData() {
@@ -2204,10 +2204,8 @@
       const isAndroid = /Android/i.test(navigator.userAgent);
       const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-      // 電腦端專用：直接開啟高德官方 POI 搜尋/詳情頁面，完全杜絕座標逆解析（regeo）飄到中心廣場的問題，精確還原第二張圖
-      const webUrl = poiId 
-        ? `https://ditu.amap.com/detail/${poiId}` 
-        : `https://ditu.amap.com/search?query=${encodeURIComponent(name)}&city=021`;
+      // 電腦端專用：一律開啟高德「全螢幕互動地圖」（左側浮動店面卡，底層為全版可縮放高德地圖，絕不跳轉至靜態圖文詳情頁）
+      const webUrl = `https://ditu.amap.com/search?query=${encodeURIComponent(name)}&city=021`;
 
       if (!isMobile) {
         window.open(webUrl, '_blank');
