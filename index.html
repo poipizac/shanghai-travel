@@ -1237,7 +1237,7 @@
                 <div style="font-size: 0.8rem; color: var(--text-muted);">上海市黃浦區方浜中路265號華寶樓1樓</div>
               </div>
               <div class="btn-group">
-                <a class="copy-btn amap-btn" href="#" onclick="openAmapMarker('裕莲茶楼(上海豫园华宝楼店)', '121.49201', '31.22555', event)">
+                <a class="copy-btn amap-btn" href="#" onclick="openAmapMarker('裕莲茶楼(上海豫园华宝楼店)', '121.492081', '31.225451', event, 'B0LKXDMLQ0')">
                   <i class="fa-solid fa-map-location-dot"></i> 高德
                 </a>
                 <button class="copy-btn" onclick="copyAddress('上海市黄浦区方浜中路265号华宝楼1楼')">
@@ -1472,7 +1472,7 @@
         desc: "• <strong>交通方式：</strong><br>&nbsp;&nbsp;• 地鐵 2 號線（龍陽路 ➔ 人民廣場站，約 15 分鐘）➔ 出站往南步行 5 分鐘即達「雲南南路」。<br><br>• <strong>遊玩動線（由西向東・超順路）：</strong><ol style='margin-left: 20px; margin-top: 6px; line-height: 1.8;'><li><strong>16:00 雲南南路：</strong>享用阿寶炸豬排、小紹興白斬雞或大壺春生煎。</li><li><strong>17:00 漫步金陵東路：</strong>吃飽後沿著金陵東路騎樓散步 10 分鐘，直達豫園。</li><li><strong>17:30 豫園華寶樓 1F：</strong>趁天黑前買好裕蓮茶樓「蔥香牛軋萬德福」。</li><li><strong>18:00 豫園賞燈：</strong>傍晚剛好欣賞豫園仿古建築群金碧輝煌的亮燈時刻。</li></ol>",
         copyAddr: "上海市黄浦区方浜中路265号华宝楼1楼",
         transitFromPrev: 15,
-        amapUrl: "https://uri.amap.com/navigation?from=121.55776,31.20371,龍陽路地鐵站&to=121.49201,31.22555,裕莲茶楼(上海豫园华宝楼店)&mode=bus",
+        amapUrl: "https://uri.amap.com/navigation?from=121.55776,31.20371,龍陽路地鐵站&to=121.49208,31.22545,裕莲茶楼(上海豫园华宝楼店)&mode=bus",
         amapBtnText: "高德地圖地鐵路線"
       },
       {
@@ -1483,7 +1483,7 @@
         tag: "聽勸夜景 2 選 1",
         desc: "此時您人在豫園，依照您的喜好選擇夜景方案，回龍陽路都極度順路：<br><br><div style='background: rgba(56, 189, 248, 0.12); border-left: 4px solid #38bdf8; padding: 12px 16px; border-radius: 10px; margin-bottom: 14px;'><strong style='color: #38bdf8; font-size: 1.05rem;'>【選項 A：2元輪渡 ＋ 陸家嘴（最推薦，無縫接回龍陽路）】</strong><br><br>• <strong>動線：</strong><ol style='margin-left: 20px; margin-top: 6px; line-height: 1.8;'><li>豫園步行 10 分鐘至「金陵東路渡口」，刷 2 元搭浦江輪渡到浦東「東昌路渡口」（江上吹風看兩岸亮燈）。</li><li>出渡口漫步或搭車至陸家嘴欣賞摩天大樓群（若要俯瞰可登上上海中心大廈 118F）。</li><li><strong>回程極快：</strong>從陸家嘴站搭地鐵 2 號線，只要 3 站（約 9 分鐘）就直達龍陽路站！</li></ol></div><div style='background: rgba(168, 85, 247, 0.12); border-left: 4px solid #a855f7; padding: 12px 16px; border-radius: 10px;'><strong style='color: #a855f7; font-size: 1.05rem;'>【選項 B：北外灘白玉蘭廣場（原影片推薦路線）】</strong><br><br>• <strong>動線：</strong><ol style='margin-left: 20px; margin-top: 6px; line-height: 1.8;'><li>豫園直接打車 12 分鐘至北外灘「白玉蘭廣場」（人民咖啡館看高空全景，下樓拍北外灘巨蛋與東方明珠同框）。</li><li><strong>回程：</strong>從白玉蘭打車回龍陽路站（走大連路隧道約 18-20 分鐘，車資約 35 RMB）。</li></ol></div>",
         transitFromPrev: 15,
-        amapUrl: "https://uri.amap.com/navigation?from=121.49201,31.22555,裕莲茶楼(上海豫园华宝楼店)&to=121.50500,31.23800,陸家嘴&mode=bus",
+        amapUrl: "https://uri.amap.com/navigation?from=121.49208,31.22545,裕莲茶楼(上海豫园华宝楼店)&to=121.50500,31.23800,陸家嘴&mode=bus",
         amapBtnText: "高德地圖 (渡口/陸家嘴/北外灘)"
       },
       {
@@ -1672,7 +1672,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260912_v24_yulian_exact_coords";
+    const DATA_VERSION = "20260912_v25_yulian_poi_exact";
 
     // Load or initialize itinerary data
     function initItineraryData() {
@@ -2088,7 +2088,7 @@
       'longyang': { name: '龍陽路地鐵站 上海', amap: '龍陽路地鐵站', lnglat: '121.55776,31.20371', lng: '121.55776', lat: '31.20371' },
       'lingang': { name: '临港冰雪明城酒店(耀雪冰雪世界店)', amap: '临港冰雪明城酒店(耀雪冰雪世界店)', lnglat: '121.90677,30.91730', lng: '121.90677', lat: '30.91730' },
       'yaoxue': { name: '耀雪冰雪世界', amap: '耀雪冰雪世界', lnglat: '121.92110,30.89850', lng: '121.92110', lat: '30.89850' },
-      'yuyuan': { name: '裕莲茶楼(上海豫园华宝楼店)', amap: '裕莲茶楼(上海豫园华宝楼店)', lnglat: '121.49201,31.22555', lng: '121.49201', lat: '31.22555' },
+      'yuyuan': { name: '裕莲茶楼(上海豫园华宝楼店)', amap: '裕莲茶楼(上海豫园华宝楼店)', lnglat: '121.49208,31.22545', lng: '121.49208', lat: '31.22545' },
       'bund': { name: '上海北外灘', amap: '北外灘', lnglat: '121.49752,31.24618', lng: '121.49752', lat: '31.24618' },
       'manting': { name: '上海市浦东新区陈桥村957号', amap: '上海市浦东新区陈桥村957号', lnglat: '121.69030,31.14569', lng: '121.69030', lat: '31.14569' },
       'disney': { name: '上海迪士尼樂園', amap: '上海迪士尼樂園', lnglat: '121.65796,31.14151', lng: '121.65796', lat: '31.14151' },
@@ -2194,7 +2194,7 @@
       openAmapSmartUrl(webUrl, event);
     }
 
-    function openAmapMarker(name, lng, lat, event) {
+    function openAmapMarker(name, lng, lat, event, poiId) {
       if (event && event.preventDefault) {
         event.preventDefault();
         event.stopPropagation();
@@ -2204,26 +2204,38 @@
       const isAndroid = /Android/i.test(navigator.userAgent);
       const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-      // Web 端專用：地圖標記定位（非導航，直接在上海地圖上插旗標記地點）
-      const webMarkerUrl = `https://uri.amap.com/marker?position=${lng},${lat}&name=${encodeURIComponent(name)}&coordinate=gaode&src=shanghaitravel&callnative=1`;
+      // 電腦端專用：直接開啟高德官方 POI 搜尋/詳情頁面，完全杜絕座標逆解析（regeo）飄到中心廣場的問題，精確還原第二張圖
+      const webUrl = poiId 
+        ? `https://ditu.amap.com/detail/${poiId}` 
+        : `https://ditu.amap.com/search?query=${encodeURIComponent(name)}&city=021`;
 
       if (!isMobile) {
-        // 電腦端直接開啟高德地圖標記頁面（顯示該地點座標插旗，不進入導航規劃狀態）
-        window.open(webMarkerUrl, '_blank');
+        window.open(webUrl, '_blank');
         return;
       }
 
-      // 手機端：調用高德官方 viewMap 地圖標註協定（直接定位精確地點，不進入起終點導航狀態）
+      // 手機端：喚起高德 App 地圖標註 / POI 頁面
       let appUrl = '';
       let intentUrl = '';
 
-      if (isAndroid) {
-        appUrl = `androidamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
-        intentUrl = `intent://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0#Intent;scheme=androidamap;package=com.autonavi.minimap;end`;
-      } else if (isIOS) {
-        appUrl = `iosamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+      if (poiId) {
+        if (isAndroid) {
+          appUrl = `androidamap://poi?sourceApplication=shanghaitravel&id=${poiId}&dev=0`;
+          intentUrl = `intent://poi?sourceApplication=shanghaitravel&id=${poiId}&dev=0#Intent;scheme=androidamap;package=com.autonavi.minimap;end`;
+        } else if (isIOS) {
+          appUrl = `iosamap://poi?sourceApplication=shanghaitravel&id=${poiId}&dev=0`;
+        } else {
+          appUrl = `androidamap://poi?sourceApplication=shanghaitravel&id=${poiId}&dev=0`;
+        }
       } else {
-        appUrl = `androidamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+        if (isAndroid) {
+          appUrl = `androidamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+          intentUrl = `intent://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0#Intent;scheme=androidamap;package=com.autonavi.minimap;end`;
+        } else if (isIOS) {
+          appUrl = `iosamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+        } else {
+          appUrl = `androidamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+        }
       }
 
       let pageLeft = false;
@@ -2239,14 +2251,14 @@
       } else if (appUrl) {
         window.location.href = appUrl;
       } else {
-        window.open(webMarkerUrl, '_blank');
+        window.open(webUrl, '_blank');
         return;
       }
 
-      // 備援計時器：若手機未安裝高德 App，2.5 秒後開啟 Web 標記頁面
+      // 備援計時器：若手機未安裝高德 App，2.5 秒後開啟 Web 頁面
       setTimeout(() => {
         if (!pageLeft && !document.hidden) {
-          window.open(webMarkerUrl, '_blank');
+          window.open(webUrl, '_blank');
         }
       }, 2500);
     }
