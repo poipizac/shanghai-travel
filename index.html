@@ -1267,7 +1267,7 @@
                 <div style="font-size: 0.8rem; color: var(--text-muted);">上海市徐匯區淮海中路1850號</div>
               </div>
               <div class="btn-group">
-                <a class="copy-btn amap-btn" href="#" onclick="openAmapMarker('武康大樓', '121.44293', '31.20087', event)">
+                <a class="copy-btn amap-btn" href="#" onclick="openAmapMarker('武康大楼', '121.43828', '31.20443', event, '武康大楼', 'B00155ITJ1')">
                   <i class="fa-solid fa-map-location-dot"></i> 高德
                 </a>
                 <button class="copy-btn" onclick="copyAddress('上海市徐汇区淮海中路1850号')">
@@ -1653,10 +1653,10 @@
           endTime: "16:30",
           title: "換回便服 ➔ 打車至武康路梧桐區漫步（打卡武康大樓）",
           tag: "市區質感漫步",
-          desc: "褪去漢服華服換回舒適便服。宮宴位於靜安區北京西路，餐後打車僅需約 10-15 分鐘（約 3.5 公里，車資約 18 RMB）即可直達 <strong>武康路梧桐區</strong> 打卡武康大樓與質感小店；或漫步靜安寺商圈，進行最後的上海街景巡禮！",
+          desc: "褪去漢服華服換回舒適便服。宮宴位於靜安區北京西路，餐後打車僅需約 10-15 分鐘（約 3.5 公里，車資約 18 RMB）即可直達 <strong>武康路梧桐區</strong> 打卡「武康大樓」（上海市徐匯區淮海中路1850號）與質感小店；或漫步靜安寺商圈，進行最後的上海街景巡禮！",
           copyAddr: "上海市徐汇区淮海中路1850号",
           transitFromPrev: 15,
-          amapUrl: "https://uri.amap.com/navigation?from=121.44772,31.22693,宫宴(上海店)&to=121.44293,31.20087,武康大樓&mode=bus",
+          amapUrl: "https://uri.amap.com/navigation?from=121.44772,31.22693,宫宴(上海店)&to=121.43828,31.20443,武康大楼&mode=bus",
           amapBtnText: "高德地圖路線 (宮宴➔武康大樓)"
         },
         {
@@ -1668,7 +1668,7 @@
           desc: "取回寄存行李，搭乘網約車直達 <strong>浦東國際機場 T2 (車程約 45-50 分鐘)</strong>。<br>預計 17:30 - 18:00 前抵達機場，順暢辦理長榮航空登機報到、行李托運與免稅店採買。",
           transitFromPrev: 30,
           minDuration: 45,
-          amapUrl: "https://uri.amap.com/navigation?from=121.44293,31.20087,武康大樓&to=121.81055,31.14488,浦東國際機場T2&mode=car",
+          amapUrl: "https://uri.amap.com/navigation?from=121.43828,31.20443,武康大楼&to=121.81055,31.14488,浦東國際機場T2&mode=car",
           amapBtnText: "高德打車直達機場"
         },
         {
@@ -1687,7 +1687,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260912_v29_gongyan_jingan_accurate";
+    const DATA_VERSION = "20260912_v30_wukang_poi_accurate";
 
     // Load or initialize itinerary data
     function initItineraryData() {
@@ -2107,7 +2107,7 @@
       'bund': { name: '上海北外灘', amap: '北外灘', lnglat: '121.49752,31.24618', lng: '121.49752', lat: '31.24618' },
       'manting': { name: '上海市浦东新区陈桥村957号', amap: '上海市浦东新区陈桥村957号', lnglat: '121.69030,31.14569', lng: '121.69030', lat: '31.14569' },
       'disney': { name: '上海迪士尼樂園', amap: '上海迪士尼樂園', lnglat: '121.65796,31.14151', lng: '121.65796', lat: '31.14151' },
-      'wukang': { name: '上海武康大樓', amap: '武康大樓', lnglat: '121.44293,31.20087', lng: '121.44293', lat: '31.20087' },
+      'wukang': { name: '武康大楼', amap: '武康大楼', lnglat: '121.43828,31.20443', lng: '121.43828', lat: '31.20443', poiId: 'B00155ITJ1' },
       'gongyan': { name: '宫宴(上海店)', amap: '宫宴(上海店)', lnglat: '121.44772,31.22693', lng: '121.44772', lat: '31.22693' }
     };
 
