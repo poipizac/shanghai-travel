@@ -1237,7 +1237,7 @@
                 <div style="font-size: 0.8rem; color: var(--text-muted);">上海市黃浦區方浜中路265號華寶樓1樓</div>
               </div>
               <div class="btn-group">
-                <a class="copy-btn amap-btn" href="#" onclick="openAmapMarker('裕莲茶楼(豫园华宝楼1F)', '121.49208', '31.22545', event, '豫园华宝楼')">
+                <a class="copy-btn amap-btn" href="#" onclick="openAmapMarker('裕莲茶楼(上海豫园华宝楼店)', '121.492081', '31.225451', event, '裕莲茶楼', 'B0LKXDMLQ0')">
                   <i class="fa-solid fa-map-location-dot"></i> 高德
                 </a>
                 <button class="copy-btn" onclick="copyAddress('上海市黄浦区方浜中路265号华宝楼1楼')">
@@ -1672,7 +1672,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260912_v27_huabaolou_search_pin";
+    const DATA_VERSION = "20260912_v28_yulian_exact_poi_detail";
 
     // Load or initialize itinerary data
     function initItineraryData() {
@@ -2194,7 +2194,7 @@
       openAmapSmartUrl(webUrl, event);
     }
 
-    function openAmapMarker(name, lng, lat, event, searchOverride) {
+    function openAmapMarker(name, lng, lat, event, searchOverride, poiId) {
       if (event && event.preventDefault) {
         event.preventDefault();
         event.stopPropagation();
@@ -2204,26 +2204,44 @@
       const isAndroid = /Android/i.test(navigator.userAgent);
       const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-      // 電腦端專用：開啟高德全螢幕互動地圖（優先使用精準搜尋關鍵詞，避免文字搜尋飄移至景區中心）
-      const queryTerm = searchOverride || name;
-      const webUrl = `https://ditu.amap.com/search?query=${encodeURIComponent(queryTerm)}&city=021`;
+      // 電腦端專用：開啟高德全螢幕互動地圖
+      // 若提供 poiId，直接開啟官方精準 POI 詳情（單一錨點，避免多重搜尋結果或景區飄移）
+      let webUrl = '';
+      if (poiId) {
+        const queryVal = searchOverride || name;
+        webUrl = `https://ditu.amap.com/ssr/search/poi_detail?query_type=TQUERY&query=${encodeURIComponent(queryVal)}&city=310000&id=${encodeURIComponent(poiId)}&name=${encodeURIComponent(name)}`;
+      } else {
+        const queryTerm = searchOverride || name;
+        webUrl = `https://ditu.amap.com/search?query=${encodeURIComponent(queryTerm)}&city=021`;
+      }
 
       if (!isMobile) {
         window.open(webUrl, '_blank');
         return;
       }
 
-      // 手機端：喚起高德 App 地圖標註 / POI 頁面（以精確經緯度插旗定位）
+      // 手機端：喚起高德 App 地圖標註 / POI 頁面（若有 poiId 則優先使用官方 POI 協議）
       let appUrl = '';
       let intentUrl = '';
 
-      if (isAndroid) {
-        appUrl = `androidamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
-        intentUrl = `intent://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0#Intent;scheme=androidamap;package=com.autonavi.minimap;end`;
-      } else if (isIOS) {
-        appUrl = `iosamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+      if (poiId) {
+        if (isAndroid) {
+          appUrl = `androidamap://poi?sourceApplication=shanghaitravel&id=${encodeURIComponent(poiId)}&dev=0`;
+          intentUrl = `intent://poi?sourceApplication=shanghaitravel&id=${encodeURIComponent(poiId)}&dev=0#Intent;scheme=androidamap;package=com.autonavi.minimap;end`;
+        } else if (isIOS) {
+          appUrl = `iosamap://poi?sourceApplication=shanghaitravel&id=${encodeURIComponent(poiId)}&dev=0`;
+        } else {
+          appUrl = `androidamap://poi?sourceApplication=shanghaitravel&id=${encodeURIComponent(poiId)}&dev=0`;
+        }
       } else {
-        appUrl = `androidamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+        if (isAndroid) {
+          appUrl = `androidamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+          intentUrl = `intent://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0#Intent;scheme=androidamap;package=com.autonavi.minimap;end`;
+        } else if (isIOS) {
+          appUrl = `iosamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+        } else {
+          appUrl = `androidamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+        }
       }
 
       let pageLeft = false;
