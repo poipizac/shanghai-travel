@@ -1672,7 +1672,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260912_v21_manting_chenqiao_exact_addr";
+    const DATA_VERSION = "20260912_v22_viewmap_exact_marker";
 
     // Load or initialize itinerary data
     function initItineraryData() {
@@ -2195,10 +2195,60 @@
     }
 
     function openAmapMarker(name, lng, lat, event) {
-      // 使用 /navigation 格式（和路線規劃按鈕完全相同），因為 /marker 在手機端無法觸發高德 App
-      // 只填目的地 (to)、不填起點 (from)，高德 App 會自動使用使用者當前位置
-      const webUrl = `https://uri.amap.com/navigation?to=${lng},${lat},${encodeURIComponent(name)}&mode=car&policy=1&src=shanghaitravel&coordinate=gaode&callnative=1`;
-      openAmapSmartUrl(webUrl, event);
+      if (event && event.preventDefault) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      // Web 端專用：地圖標記定位（非導航，直接在上海地圖上插旗標記地點）
+      const webMarkerUrl = `https://uri.amap.com/marker?position=${lng},${lat}&name=${encodeURIComponent(name)}&coordinate=gaode&src=shanghaitravel&callnative=1`;
+
+      if (!isMobile) {
+        // 電腦端直接開啟高德地圖標記頁面（顯示該地點座標插旗，不進入導航規劃狀態）
+        window.open(webMarkerUrl, '_blank');
+        return;
+      }
+
+      // 手機端：調用高德官方 viewMap 地圖標註協定（直接定位精確地點，不進入起終點導航狀態）
+      let appUrl = '';
+      let intentUrl = '';
+
+      if (isAndroid) {
+        appUrl = `androidamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+        intentUrl = `intent://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0#Intent;scheme=androidamap;package=com.autonavi.minimap;end`;
+      } else if (isIOS) {
+        appUrl = `iosamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+      } else {
+        appUrl = `androidamap://viewMap?sourceApplication=shanghaitravel&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+      }
+
+      let pageLeft = false;
+      const handleVisibilityChange = () => {
+        if (document.hidden || document.webkitHidden) {
+          pageLeft = true;
+        }
+      };
+      document.addEventListener('visibilitychange', handleVisibilityChange, { once: true });
+
+      if (isAndroid && intentUrl) {
+        window.location.href = intentUrl;
+      } else if (appUrl) {
+        window.location.href = appUrl;
+      } else {
+        window.open(webMarkerUrl, '_blank');
+        return;
+      }
+
+      // 備援計時器：若手機未安裝高德 App，2.5 秒後開啟 Web 標記頁面
+      setTimeout(() => {
+        if (!pageLeft && !document.hidden) {
+          window.open(webMarkerUrl, '_blank');
+        }
+      }, 2500);
     }
 
     function calculateRoute() {
