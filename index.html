@@ -196,6 +196,185 @@
       line-height: 1.5;
     }
 
+    /* Flight Info Card Styles in Summary */
+    .flight-card-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .flight-ticket-mini {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 12px;
+      padding: 11px 13px;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .flight-ticket-mini:hover {
+      border-color: rgba(56, 189, 248, 0.5);
+      background: rgba(30, 41, 59, 0.85);
+      transform: translateY(-1px);
+    }
+
+    .flight-ticket-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.78rem;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .flight-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.76rem;
+      letter-spacing: 0.3px;
+    }
+
+    .flight-badge.outbound {
+      background: rgba(56, 189, 248, 0.16);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+
+    .flight-badge.inbound {
+      background: rgba(168, 85, 247, 0.16);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.35);
+    }
+
+    .flight-carrier-text {
+      color: #e2e8f0;
+      font-size: 0.78rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .flight-carrier-text strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .flight-pnr {
+      color: #94a3b8;
+      font-size: 0.74rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: 'Outfit', monospace;
+    }
+
+    .flight-pnr strong {
+      color: #fbbf24;
+      letter-spacing: 0.5px;
+    }
+
+    .flight-route-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .flight-station {
+      display: flex;
+      flex-direction: column;
+      min-width: 90px;
+    }
+
+    .flight-station.origin {
+      text-align: left;
+    }
+
+    .flight-station.dest {
+      text-align: right;
+    }
+
+    .flight-station .time {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+      font-family: 'Outfit', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    .flight-station .airport-name {
+      font-size: 0.75rem;
+      color: #cbd5e1;
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    .flight-station .terminal-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    .flight-station.dest .terminal-tag {
+      color: #c084fc;
+      background: rgba(168, 85, 247, 0.12);
+      border-color: rgba(168, 85, 247, 0.25);
+    }
+
+    .flight-mid {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 4px;
+    }
+
+    .flight-duration {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      margin-bottom: 3px;
+      white-space: nowrap;
+    }
+
+    .flight-arrow-line {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .flight-arrow-line::before,
+    .flight-arrow-line::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.7));
+    }
+
+    .flight-arrow-line::after {
+      background: linear-gradient(90deg, rgba(56, 189, 248, 0.7), rgba(56, 189, 248, 0.2));
+    }
+
+    .flight-arrow-line i {
+      font-size: 0.72rem;
+      color: var(--primary);
+      margin: 0 5px;
+    }
+
     /* Main Navigation Tabs */
     .nav-tabs {
       display: flex;
@@ -1041,10 +1220,58 @@
         <i class="fa-solid fa-compass" style="color: var(--primary);"></i> 行程亮點與樞紐安排總覽
       </h2>
       <div class="summary-grid">
-        <div class="summary-box">
-          <h3><i class="fa-solid fa-plane"></i> 航班資訊</h3>
-          <p><strong>去程：</strong>春秋航空 9C8952 (13:20抵達 PVG T2)<br>
-             <strong>回程：</strong>長榮/立榮 BR721 (20:05起飛 PVG T2)</p>
+        <div class="summary-box flight-summary-box">
+          <h3><i class="fa-solid fa-plane-departure"></i> 航班資訊 (去程 ＆ 回程)</h3>
+          
+          <div class="flight-card-group">
+            <!-- 去程航班 -->
+            <div class="flight-ticket-mini">
+              <div class="flight-ticket-header">
+                <span class="flight-badge outbound"><i class="fa-solid fa-plane-departure"></i> 去程 9/20 (週日)</span>
+                <span class="flight-carrier-text">春秋航空 <strong>9C8952</strong></span>
+              </div>
+              <div class="flight-route-row">
+                <div class="flight-station origin">
+                  <span class="time">11:15</span>
+                  <span class="airport-name">臺灣桃園國際機場</span>
+                  <span class="terminal-tag"><i class="fa-solid fa-location-dot"></i> 第 1 航廈 (T1)</span>
+                </div>
+                <div class="flight-mid">
+                  <span class="flight-duration"><i class="fa-regular fa-clock"></i> 2小時5分</span>
+                  <div class="flight-arrow-line"><i class="fa-solid fa-plane"></i></div>
+                </div>
+                <div class="flight-station dest">
+                  <span class="time">13:20</span>
+                  <span class="airport-name">上海浦東國際機場</span>
+                  <span class="terminal-tag"><i class="fa-solid fa-location-dot"></i> 第 2 航廈 (T2)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 回程航班 -->
+            <div class="flight-ticket-mini">
+              <div class="flight-ticket-header">
+                <span class="flight-badge inbound"><i class="fa-solid fa-plane-arrival"></i> 回程 9/23 (週三)</span>
+                <span class="flight-carrier-text">長榮航空 <strong>BR721</strong> <small style="color:var(--text-muted);">(立榮 B77017)</small></span>
+              </div>
+              <div class="flight-route-row">
+                <div class="flight-station origin">
+                  <span class="time">20:05</span>
+                  <span class="airport-name">上海浦東國際機場</span>
+                  <span class="terminal-tag"><i class="fa-solid fa-location-dot"></i> 第 2 航廈 (T2)</span>
+                </div>
+                <div class="flight-mid">
+                  <span class="flight-duration"><i class="fa-regular fa-clock"></i> 1小時55分</span>
+                  <div class="flight-arrow-line"><i class="fa-solid fa-plane"></i></div>
+                </div>
+                <div class="flight-station dest">
+                  <span class="time">22:00</span>
+                  <span class="airport-name">臺灣桃園國際機場</span>
+                  <span class="terminal-tag"><i class="fa-solid fa-location-dot"></i> 第 2 航廈 (T2)</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="summary-box">
           <h3><i class="fa-solid fa-suitcase"></i> 寄存秘訣 (龍陽路站)</h3>
@@ -1475,7 +1702,7 @@
         endTime: "15:30",
         title: "【光速卸重】浦東機場 ➔ 磁浮列車 ➔ 龍陽路站寄存行李",
         tag: "磁浮體驗 & 輕裝就緒",
-        desc: "• <strong>交通方式：</strong>浦東機場 T2 步行至磁浮站 ➔ 搭乘磁浮列車（出示機票優惠價 40 RMB，7分20秒直達龍陽路）。<br>• <strong>操作細節：</strong><ol style='margin-left: 20px; margin-top: 6px; line-height: 1.8;'><li>抵達龍陽路站後，使用支付寶搜尋「途簡單」或「小鐵寄存」，預約龍陽路站內或周邊寄存放行李。</li><li>寄存完成後，兩手空空直接走進地鐵 2 號線月台。</li></ol>",
+        desc: "• <strong>去程航班資訊：</strong>春秋航空 <strong>9C8952</strong><br>&nbsp;&nbsp;• <strong>11:15</strong> 臺灣桃園國際機場 T1 起飛 ➔ <strong>13:20</strong> 抵達上海浦東國際機場 T2（飛行時間 2小時5分）。<br>• <strong>交通方式：</strong>浦東機場 T2 步行至磁浮站 ➔ 搭乘磁浮列車（出示機票優惠價 40 RMB，7分20秒直達龍陽路）。<br>• <strong>操作細節：</strong><ol style='margin-left: 20px; margin-top: 6px; line-height: 1.8;'><li>抵達龍陽路站後，使用支付寶搜尋「途簡單」或「小鐵寄存」，預約龍陽路站內或周邊寄存放行李。</li><li>寄存完成後，兩手空空直接走進地鐵 2 號線月台。</li></ol>",
         minDuration: 60,
         amapUrl: "https://uri.amap.com/navigation?from=121.81055,31.14488,浦東國際機場T2&to=121.55776,31.20371,龍陽路地鐵站&mode=bus",
         amapBtnText: "高德地圖 (含磁懸浮/地鐵)"
@@ -1665,9 +1892,9 @@
           id: "d4-5",
           startTime: "16:30",
           endTime: "18:00",
-          title: "前往「浦東國際機場 T2」辦理登機與托運",
+          title: "前往「上海浦東國際機場 T2」辦理登機與托運",
           tag: "前往機場",
-          desc: "取回寄存行李，搭乘網約車直達 <strong>浦東國際機場 T2 (車程約 45-50 分鐘)</strong>。<br>預計 17:30 - 18:00 前抵達機場，順暢辦理長榮航空登機報到、行李托運與免稅店採買。",
+          desc: "取回寄存行李，搭乘網約車直達 <strong>上海浦東國際機場 第 2 航廈 (T2)</strong>（車程約 45-50 分鐘）。<br>預計 17:30 - 18:00 前抵達機場辦理長榮航空 BR721 登機報到、行李托運與免稅店採買（班機 20:05 起飛，務必預留充足安檢與通關時間）。",
           transitFromPrev: 30,
           minDuration: 45,
           amapUrl: "https://uri.amap.com/navigation?from=121.43828,31.20443,武康大楼&to=121.81055,31.14488,浦東國際機場T2&mode=car",
@@ -1677,9 +1904,9 @@
           id: "d4-6",
           startTime: "20:05",
           endTime: "22:00",
-          title: "搭乘長榮 BR721 班機圓滿返台",
+          title: "搭乘長榮 BR721 (立榮 B77017) 圓滿返台",
           tag: "圓滿返台",
-          desc: "搭乘 20:05 起飛的航班返回台北桃園國際機場 T2，帶著滿滿宮廷御宴與夢幻回憶圓滿結束 4 天 3 夜上海之旅！",
+          desc: "• <strong>回程航班資訊：</strong>長榮航空 <strong>BR721</strong>（立榮航空 B77017 聯營）<br>&nbsp;&nbsp;• <strong>20:05</strong> 上海浦東國際機場 T2 起飛 ➔ <strong>22:00</strong> 抵達臺灣桃園國際機場 T2（飛行時間 1小時55分）。<br>帶著滿滿宮廷御宴、迪士尼歡樂與夢幻回憶圓滿結束 4 天 3 夜上海精彩之旅！",
           minDuration: 60
         }
       ]
@@ -1689,7 +1916,7 @@
     let itineraryData = {};
 
     // Version control for local data to automatically clear old cache when HTML updates
-    const DATA_VERSION = "20260912_v31_calc_gongyan_added";
+    const DATA_VERSION = "20260920_v33_no_pnr";
 
     // Load or initialize itinerary data
     function initItineraryData() {
